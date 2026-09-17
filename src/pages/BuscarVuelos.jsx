@@ -1,29 +1,34 @@
 import { useEffect, useMemo, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
-import { motion } from 'framer-motion'
-import { ChevronRight, ExternalLink, Loader2, Plane, ArrowLeft } from 'lucide-react'
+import { AnimatePresence, motion } from 'framer-motion'
+import { ChevronRight, ExternalLink, Plane, ArrowLeft } from 'lucide-react'
 import { decodeFlightSearchPayload, submitFlightBridge } from '../lib/flightBridge'
+import FlightSearchLoader from '../components/FlightSearchLoader'
 
 const IFRAME_NAME = 'alk-flight-results'
+const MIN_LOADER_MS = 2600 // tiempo mínimo para disfrutar la animación de búsqueda
 
 // YYYYMMDD → DD/MM/YYYY
 const fmtDate = (d) => (d && d.length === 8 ? `${d.slice(6)}/${d.slice(4, 6)}/${d.slice(0, 4)}` : '')
 
 export default function BuscarVuelos() {
   const { searchToken } = useParams()
-  const [status, setStatus] = useState('loading') // loading | ready | error
+  const [iframeLoaded, setIframeLoaded] = useState(false)
+  const [minDone, setMinDone] = useState(false)
 
   const payload = useMemo(() => decodeFlightSearchPayload(searchToken), [searchToken])
+  const searching = !(iframeLoaded && minDone)
 
   useEffect(() => {
-    if (!payload) {
-      setStatus('error')
-      return
+    if (!payload) return
+    setIframeLoaded(false)
+    setMinDone(false)
+    const post = window.setTimeout(() => submitFlightBridge(payload, { target: IFRAME_NAME }), 60)
+    const min = window.setTimeout(() => setMinDone(true), MIN_LOADER_MS)
+    return () => {
+      window.clearTimeout(post)
+      window.clearTimeout(min)
     }
-    setStatus('loading')
-    // POST al iframe una vez montado.
-    const t = window.setTimeout(() => submitFlightBridge(payload, { target: IFRAME_NAME }), 60)
-    return () => window.clearTimeout(t)
   }, [payload])
 
   const subtitle = payload
@@ -39,7 +44,7 @@ export default function BuscarVuelos() {
         .join(' · ')
     : ''
 
-  if (status === 'error') {
+  if (!payload) {
     return (
       <section className="flex min-h-[70vh] items-center bg-mist pt-24">
         <div className="container-x text-center">
@@ -92,21 +97,29 @@ export default function BuscarVuelos() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="overflow-hidden rounded-[28px] border border-line bg-white shadow-lift"
+            className="relative overflow-hidden rounded-[28px] border border-line bg-white shadow-lift"
           >
-            {status === 'loading' && (
-              <div className="flex items-center justify-center gap-3 border-b border-line bg-mist px-6 py-4 text-sm font-medium text-ink-600">
-                <Loader2 className="h-4 w-4 animate-spin text-cyan-500" />
-                Cargando resultados del motor de vuelos…
-              </div>
-            )}
             <iframe
               title="Resultados de vuelos"
               name={IFRAME_NAME}
-              onLoad={() => setStatus('ready')}
+              onLoad={() => setIframeLoaded(true)}
               className="block w-full bg-white"
               style={{ height: 'calc(100vh - 160px)', minHeight: '760px' }}
             />
+
+            {/* Animación de búsqueda superpuesta hasta que el motor responde */}
+            <AnimatePresence>
+              {searching && (
+                <motion.div
+                  initial={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.5 }}
+                  className="absolute inset-0 z-10 bg-white"
+                >
+                  <FlightSearchLoader from={payload.startPt} to={payload.endPt} />
+                </motion.div>
+              )}
+            </AnimatePresence>
           </motion.div>
 
           <p className="mt-4 text-center text-xs text-ink-500">

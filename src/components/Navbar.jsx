@@ -12,8 +12,11 @@ export default function Navbar() {
   const [open, setOpen] = useState(false)
   const { pathname } = useLocation()
 
-  // On the home page the hero video sits under a transparent (light-text) navbar.
-  const overHero = pathname === '/' && !scrolled
+  // Páginas con hero oscuro a tope de página: el navbar va transparente con texto
+  // blanco al entrar y se vuelve sólido (texto oscuro) al hacer scroll — igual que
+  // en el home. El resto de páginas (legales, /buscar) tienen cabecera clara.
+  const darkHeroRoutes = ['/', '/vuelos', '/hoteles', '/nosotros', '/contacto']
+  const overHero = darkHeroRoutes.includes(pathname) && !scrolled
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24)
