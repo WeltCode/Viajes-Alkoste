@@ -110,6 +110,31 @@ export const buildFlightBridgePayload = ({
   infants: String(babies),
 })
 
+// --- Serialización del payload en la URL (/buscar/:token) ---
+// base64url = base64 con +/= sustituidos por -_ y sin padding (seguro en URL).
+const encodeBase64Url = (value) =>
+  btoa(unescape(encodeURIComponent(value)))
+    .replace(/\+/g, '-')
+    .replace(/\//g, '_')
+    .replace(/=+$/g, '')
+
+const decodeBase64Url = (value) => {
+  const normalized = String(value || '').replace(/-/g, '+').replace(/_/g, '/')
+  const padding = normalized.length % 4
+  const padded = padding ? normalized + '='.repeat(4 - padding) : normalized
+  return decodeURIComponent(escape(atob(padded)))
+}
+
+export const encodeFlightSearchPayload = (payload) => encodeBase64Url(JSON.stringify(payload))
+
+export const decodeFlightSearchPayload = (value) => {
+  try {
+    return JSON.parse(decodeBase64Url(value))
+  } catch {
+    return null
+  }
+}
+
 // POST nativo al motor (compatibilidad con el backend .aspx).
 export const submitFlightBridge = (payload, options = {}) => {
   const { target = '_blank' } = options

@@ -31,6 +31,7 @@ import Nosotros from './pages/Nosotros'
 import Vuelos from './pages/Vuelos'
 import Hoteles from './pages/Hoteles'
 import Contacto from './pages/Contacto'
+import BuscarVuelos from './pages/BuscarVuelos'
 import NotFound from './pages/NotFound'
 import CookieConsent from './components/CookieConsent'
 import CondicionesGenerales from './pages/legal/CondicionesGenerales'
@@ -51,6 +52,7 @@ export default function App() {
           <Route path="/hoteles" element={<Hoteles />} />
           <Route path="/nosotros" element={<Nosotros />} />
           <Route path="/contacto" element={<Contacto />} />
+          <Route path="/buscar/:searchToken" element={<BuscarVuelos />} />
           <Route path="/condiciones-generales" element={<CondicionesGenerales />} />
           <Route path="/proteccion-de-datos" element={<ProteccionDatos />} />
           <Route path="/politica-privacidad" element={<PoliticaPrivacidad />} />

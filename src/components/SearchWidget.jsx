@@ -1,4 +1,5 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { AnimatePresence, motion } from 'framer-motion'
 import { MapPin, CalendarDays, Users, ArrowLeftRight, Plane, Minus, Plus, AlertCircle } from 'lucide-react'
 import FlightButton from './FlightButton'
@@ -7,7 +8,7 @@ import {
   searchAirports,
   resolveAirport,
   buildFlightBridgePayload,
-  submitFlightBridge,
+  encodeFlightSearchPayload,
 } from '../lib/flightBridge'
 
 const ease = [0.16, 1, 0.3, 1]
@@ -101,6 +102,7 @@ function Stepper({ label, hint, value, min, max, onChange }) {
 }
 
 export default function SearchWidget() {
+  const navigate = useNavigate()
   const [tripType, setTripType] = useState('round-trip')
   const [error, setError] = useState('')
   const [ready, setReady] = useState(false)
@@ -170,8 +172,8 @@ export default function SearchWidget() {
       babies: pax.babies,
     })
 
-    setTakeoffSignal((n) => n + 1) // reproduce el despegue
-    window.setTimeout(() => submitFlightBridge(payload, { target: '_blank' }), 850)
+    setTakeoffSignal((n) => n + 1) // reproduce el despegue y luego navega a resultados
+    window.setTimeout(() => navigate(`/buscar/${encodeFlightSearchPayload(payload)}`), 750)
   }
 
   return (
@@ -318,7 +320,7 @@ export default function SearchWidget() {
       </div>
 
       <p className="relative mt-4 text-xs leading-relaxed text-ink-500">
-        Los resultados se abren en nuestro motor de reservas seguro.
+        Verás los resultados aquí mismo, en nuestro motor de reservas.
       </p>
     </motion.form>
   )
