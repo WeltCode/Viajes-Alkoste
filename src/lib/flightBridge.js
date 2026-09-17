@@ -3,10 +3,15 @@
 // nativo con los campos exigidos por el motor. Los aeropuertos se cargan de
 // forma diferida (public/data/airports.json) para no inflar el bundle inicial.
 
-// Endpoint del motor (contrato fijo). Configurable por si cambia el host.
+// Endpoint del motor (contrato fijo). Igual que Vicente Viajes, el POST debe ir
+// al PUENTE del motor (QueryBridge.aspx), que recibe el payload simple, lo guarda
+// en una cookie y redirige a Default.aspx, que la lee y muestra los resultados.
+// ⚠️ Este puente debe estar ACTIVADO por el proveedor del motor para la cuenta
+// "ak" (en Vicente está activado para "vv"). Mientras no lo esté, el motor
+// mostrará su formulario en vez de los resultados. Configurable por si cambia.
 export const FLIGHT_BRIDGE_URL =
   import.meta.env.VITE_FLIGHT_BRIDGE_URL ||
-  'http://vuelos.viajesalkoste.com/wtc/ak/vuelos/Default.aspx'
+  'http://vuelos.viajesalkoste.com/wtc/ak/vuelos/QueryBridge.aspx'
 
 const normalizeText = (value) =>
   String(value || '')
