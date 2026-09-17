@@ -1,0 +1,95 @@
+import { Link } from 'react-router-dom'
+import { Phone, Mail, MapPin, Clock, Instagram, Facebook } from 'lucide-react'
+import WhatsAppIcon from './WhatsAppIcon'
+import PoweredByWeltBrave from './branding/PoweredByWeltBrave'
+import { contact } from '../data/site'
+import logoLight from '../assets/AlkosteLogo.png'
+
+const legalLinks = [
+  { label: 'Condiciones Generales', to: '/condiciones-generales' },
+  { label: 'Protección de Datos', to: '/proteccion-de-datos' },
+  { label: 'Política de Privacidad', to: '/politica-privacidad' },
+  { label: 'Equipaje Permitido', to: '/equipaje-permitido' },
+]
+
+const agencyLinks = [
+  { label: 'Billetes Aéreos', to: '/vuelos' },
+  { label: 'Nosotros', to: '/nosotros' },
+  { label: 'Contáctanos', to: '/contacto' },
+  { label: 'Política de cookies (UE)', to: '/politica-cookies' },
+]
+
+function LinkItem({ label, to }) {
+  const cls = 'text-white/60 transition-colors hover:text-cyan-300'
+  return to.startsWith('/') ? (
+    <Link to={to} className={cls}>{label}</Link>
+  ) : (
+    <a href={to} className={cls}>{label}</a>
+  )
+}
+
+export default function Footer() {
+  return (
+    <footer className="relative overflow-hidden bg-ink text-white">
+      <div className="pointer-events-none absolute -top-40 left-1/2 h-96 w-[40rem] -translate-x-1/2 rounded-full bg-cyan-500/15 blur-[120px]" aria-hidden="true" />
+      <div className="container-x relative py-16">
+        <div className="grid gap-12 lg:grid-cols-[1.5fr_1fr_1fr_1.1fr]">
+          {/* Company */}
+          <div>
+            <img src={logoLight} alt="Viajes Alkoste" className="h-14 w-auto" />
+            <p className="mt-5 text-sm font-bold text-white">{contact.legalName}</p>
+            <p className="text-sm text-white/60">CIF: {contact.cif}</p>
+            <p className="mt-4 max-w-xs text-sm leading-relaxed text-white/60">
+              Tu agencia de confianza desde 2002. Vuelos, paquetes y experiencias a
+              Latinoamérica y el mundo, con asesoría personal y trato humano.
+            </p>
+            <div className="mt-6 flex gap-3">
+              <a href={contact.instagram} target="_blank" rel="noreferrer" aria-label="Instagram" className="grid h-10 w-10 place-items-center rounded-full border border-white/15 text-white/70 transition-colors hover:border-cyan-400 hover:text-cyan-300"><Instagram className="h-4 w-4" /></a>
+              <a href={contact.facebook} target="_blank" rel="noreferrer" aria-label="Facebook" className="grid h-10 w-10 place-items-center rounded-full border border-white/15 text-white/70 transition-colors hover:border-cyan-400 hover:text-cyan-300"><Facebook className="h-4 w-4" /></a>
+              <a href={contact.whatsappHref} target="_blank" rel="noreferrer" aria-label="WhatsApp" className="grid h-10 w-10 place-items-center rounded-full border border-white/15 text-white/70 transition-colors hover:border-cyan-400 hover:text-cyan-300"><WhatsAppIcon className="h-4 w-4" /></a>
+            </div>
+          </div>
+
+          {/* Apartado Legal */}
+          <nav aria-label="Apartado legal">
+            <h3 className="text-xs font-bold uppercase tracking-[0.2em] text-white">Apartado Legal</h3>
+            <ul className="mt-5 space-y-3 text-sm">
+              {legalLinks.map((l) => (
+                <li key={l.label}><LinkItem {...l} /></li>
+              ))}
+            </ul>
+          </nav>
+
+          {/* Agencia */}
+          <nav aria-label="Agencia">
+            <h3 className="text-xs font-bold uppercase tracking-[0.2em] text-white">Agencia</h3>
+            <ul className="mt-5 space-y-3 text-sm">
+              {agencyLinks.map((l) => (
+                <li key={l.label}><LinkItem {...l} /></li>
+              ))}
+            </ul>
+          </nav>
+
+          {/* Contacto */}
+          <div>
+            <h3 className="text-xs font-bold uppercase tracking-[0.2em] text-white">Contacto</h3>
+            <ul className="mt-5 space-y-4 text-sm text-white/70">
+              <li className="flex items-start gap-3"><MapPin className="mt-0.5 h-4 w-4 shrink-0 text-cyan-400" /><a href={contact.addressMap} target="_blank" rel="noreferrer" className="hover:text-cyan-300">{contact.address}</a></li>
+              <li className="flex items-start gap-3"><Phone className="mt-0.5 h-4 w-4 shrink-0 text-cyan-400" /><a href={contact.phoneHref} className="hover:text-cyan-300">{contact.phone}</a></li>
+              <li className="flex items-start gap-3"><WhatsAppIcon className="mt-0.5 h-4 w-4 shrink-0 text-cyan-400" /><a href={contact.whatsappHref} target="_blank" rel="noreferrer" className="hover:text-cyan-300">{contact.whatsapp}</a></li>
+              <li className="flex items-start gap-3"><Mail className="mt-0.5 h-4 w-4 shrink-0 text-cyan-400" /><a href={contact.emailHref} className="hover:text-cyan-300">{contact.email}</a></li>
+              <li className="flex items-start gap-3"><Clock className="mt-0.5 h-4 w-4 shrink-0 text-cyan-400" /><span>{contact.hours}</span></li>
+            </ul>
+          </div>
+        </div>
+
+        <div className="mt-14 flex flex-col items-center gap-6 border-t border-white/10 pt-8">
+          <PoweredByWeltBrave />
+          <p className="text-center text-xs text-white/45">
+            © {new Date().getFullYear()} {contact.legalName} · Viajes Alkoste. Todos los derechos reservados.
+          </p>
+        </div>
+      </div>
+    </footer>
+  )
+}

@@ -1,0 +1,154 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: light;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-white text-ink font-sans antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  ::selection {
+    @apply bg-cyan-200 text-ink;
+  }
+
+  ::-webkit-scrollbar {
+    width: 11px;
+    height: 11px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #eef6fb;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #b6dff2;
+    border-radius: 999px;
+    border: 3px solid #eef6fb;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #08acf2;
+  }
+}
+
+@layer components {
+  .container-x {
+    @apply mx-auto w-full max-w-7xl px-5 sm:px-8 lg:px-12;
+  }
+
+  .display {
+    @apply font-display font-bold tracking-tightest;
+  }
+
+  .kicker {
+    @apply inline-flex items-center gap-2 text-[0.72rem] font-bold uppercase tracking-[0.22em] text-cyan-600;
+  }
+
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-bold
+           transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500 focus-visible:ring-offset-2;
+  }
+  .btn-primary {
+    @apply btn bg-cyan-500 text-white shadow-glow hover:-translate-y-0.5 hover:bg-cyan-600;
+  }
+  .btn-ghost {
+    @apply btn border border-line bg-white text-ink hover:border-cyan-400 hover:text-cyan-600;
+  }
+  .btn-white {
+    @apply btn bg-white text-ink shadow-soft hover:-translate-y-0.5 hover:text-cyan-600;
+  }
+
+  .card {
+    @apply rounded-3xl border border-line bg-white shadow-card transition-all duration-300;
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .ig-ring {
+    background: conic-gradient(from 45deg, #feda75, #fa7e1e, #d62976, #962fbf, #4f5bd5, #feda75);
+  }
+}
+
+/* Immersive "Buscar vuelo" take-off (driven by the .is-flying class) */
+@keyframes alk-takeoff {
+  0% { transform: translate(0, 0) rotate(0deg); opacity: 1; }
+  55% { transform: translate(120px, -16px) rotate(-12deg); opacity: 1; }
+  100% { transform: translate(320px, -86px) rotate(-22deg); opacity: 0; }
+}
+@keyframes alk-contrail {
+  0% { width: 10px; opacity: 0.25; }
+  55% { width: 94px; opacity: 0.9; }
+  100% { width: 132px; opacity: 0; }
+}
+@keyframes alk-sky {
+  0% { transform: translateX(-55%); opacity: 0; }
+  45% { opacity: 0.55; }
+  100% { transform: translateX(55%); opacity: 0; }
+}
+.is-flying .alk-aircraft { animation: alk-takeoff 1s cubic-bezier(0.5, 0, 0.75, 1) forwards; }
+.is-flying .alk-contrail { animation: alk-contrail 1s cubic-bezier(0.5, 0, 0.75, 1) forwards; }
+.is-flying .alk-sky { animation: alk-sky 1s ease-out forwards; }
+.is-flying .alk-label { opacity: 0; transform: translateY(8px); }
+
+/* Legal / long-form reading */
+.legal-prose {
+  @apply text-[15px] leading-relaxed text-ink-700;
+}
+.legal-prose > :first-child {
+  margin-top: 0;
+}
+.legal-prose h2 {
+  @apply mt-10 mb-3 font-display text-xl font-bold text-ink sm:text-2xl;
+  scroll-margin-top: 6rem;
+}
+.legal-prose h3 {
+  @apply mt-6 mb-2 text-base font-bold text-ink;
+}
+.legal-prose p {
+  @apply my-3;
+}
+.legal-prose ul {
+  @apply my-3 space-y-1.5 pl-5;
+  list-style: disc;
+}
+.legal-prose ol {
+  @apply my-3 space-y-1.5 pl-5;
+  list-style: decimal;
+}
+.legal-prose li {
+  @apply pl-1;
+}
+.legal-prose a {
+  @apply font-medium text-cyan-600 underline underline-offset-2 hover:text-cyan-700;
+}
+.legal-prose strong {
+  @apply font-bold text-ink;
+}
+.legal-prose hr {
+  @apply my-8 border-line;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
