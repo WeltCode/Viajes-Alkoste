@@ -4,6 +4,7 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { ChevronRight, ExternalLink, Plane, ArrowLeft } from 'lucide-react'
 import { decodeFlightSearchPayload, submitFlightBridge } from '../lib/flightBridge'
 import FlightSearchLoader from '../components/FlightSearchLoader'
+import Seo from '../components/Seo'
 
 const IFRAME_NAME = 'alk-flight-results'
 const MIN_LOADER_MS = 2600 // tiempo mínimo para disfrutar la animación de búsqueda
@@ -47,6 +48,7 @@ export default function BuscarVuelos() {
   if (!payload) {
     return (
       <section className="flex min-h-[70vh] items-center bg-mist pt-24">
+        <Seo noindex title="Búsqueda de vuelos | Viajes Alkoste" />
         <div className="container-x text-center">
           <div className="mx-auto max-w-md rounded-3xl border border-line bg-white p-10 shadow-card">
             <span className="mx-auto grid h-12 w-12 place-items-center rounded-2xl bg-red-50 text-red-500">
@@ -63,6 +65,7 @@ export default function BuscarVuelos() {
 
   return (
     <>
+      <Seo noindex title={`Vuelos ${payload.startPt} → ${payload.endPt} | Viajes Alkoste`} />
       {/* Header */}
       <section className="relative overflow-hidden border-b border-line bg-mist pt-28">
         <div className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-cyan-100 blur-[110px]" aria-hidden="true" />

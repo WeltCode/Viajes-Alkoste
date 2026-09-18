@@ -11,6 +11,7 @@ import Inspiracion from '../components/Inspiracion'
 import HeroFlightPath from '../components/HeroFlightPath'
 import CTABand from '../components/CTABand'
 import Reveal from '../components/Reveal'
+import Seo from '../components/Seo'
 import { heroVideo, heroVideoSm, heroImages, contact } from '../data/site'
 
 const guarantees = [
@@ -25,6 +26,7 @@ const ease = [0.16, 1, 0.3, 1]
 export default function Home() {
   return (
     <>
+      <Seo />
       {/* HERO — video */}
       <section className="relative min-h-[100svh] overflow-hidden">
         <video

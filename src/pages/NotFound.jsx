@@ -1,9 +1,12 @@
 import { Link } from 'react-router-dom'
 import { Compass, ArrowLeft } from 'lucide-react'
+import Seo from '../components/Seo'
 
 export default function NotFound() {
   return (
-    <section className="relative flex min-h-[85svh] items-center overflow-hidden bg-mist pt-24">
+    <>
+      <Seo noindex title="Página no encontrada (404) | Viajes Alkoste" description="La página que buscas no existe. Vuelve al inicio de Viajes Alkoste para planificar tu viaje." />
+      <section className="relative flex min-h-[85svh] items-center overflow-hidden bg-mist pt-24">
       <div className="pointer-events-none absolute left-1/2 top-1/2 h-96 w-96 -translate-x-1/2 -translate-y-1/2 rounded-full bg-cyan-100 blur-[120px]" aria-hidden="true" />
       <div className="container-x relative text-center">
         <Compass className="mx-auto h-14 w-14 animate-floaty text-cyan-500" />
@@ -15,5 +18,6 @@ export default function NotFound() {
         <Link to="/" className="btn-primary mt-8"><ArrowLeft className="h-4 w-4" /> Volver al inicio</Link>
       </div>
     </section>
+    </>
   )
 }

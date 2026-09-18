@@ -3,6 +3,7 @@ import PageHero from '../components/PageHero'
 import SectionHeading from '../components/SectionHeading'
 import CTABand from '../components/CTABand'
 import Reveal from '../components/Reveal'
+import Seo from '../components/Seo'
 import { contact } from '../data/site'
 
 const IMG = 'https://images.unsplash.com'
@@ -48,6 +49,7 @@ function StayCard({ s, i }) {
 export default function Hoteles() {
   return (
     <>
+      <Seo />
       <PageHero image={img('photo-1571003123894-1f0594d2b5d9')} kicker="Alojamientos" title="Duerme donde siempre soñaste" intro="Desde hoteles de ciudad hasta resorts todo incluido frente al mar. Tú eliges el plan, nosotros el mejor precio." />
 
       <section className="container-x py-20 sm:py-28">

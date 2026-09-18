@@ -21,45 +21,23 @@
   Motion, ease-out from visible default). Brief-pinned direction: light+cyan, thick sans,
   video hero, Instagram feed.
 */
-import { Routes, Route } from 'react-router-dom'
+import { Outlet } from 'react-router-dom'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
 import WhatsAppFab from './components/WhatsAppFab'
 import ScrollToTop from './components/ScrollToTop'
-import Home from './pages/Home'
-import Nosotros from './pages/Nosotros'
-import Vuelos from './pages/Vuelos'
-import Hoteles from './pages/Hoteles'
-import Contacto from './pages/Contacto'
-import BuscarVuelos from './pages/BuscarVuelos'
-import NotFound from './pages/NotFound'
 import CookieConsent from './components/CookieConsent'
-import CondicionesGenerales from './pages/legal/CondicionesGenerales'
-import ProteccionDatos from './pages/legal/ProteccionDatos'
-import PoliticaPrivacidad from './pages/legal/PoliticaPrivacidad'
-import EquipajePermitido from './pages/legal/EquipajePermitido'
-import PoliticaCookies from './pages/legal/PoliticaCookies'
 
+// Layout raíz: cabecera, pie y elementos globales alrededor de la página activa
+// (<Outlet />). Las rutas se declaran como datos en src/routes.jsx para permitir
+// el prerenderizado estático (SSG) de cada página.
 export default function App() {
   return (
     <div className="flex min-h-screen flex-col">
       <ScrollToTop />
       <Navbar />
       <main className="flex-1">
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/vuelos" element={<Vuelos />} />
-          <Route path="/hoteles" element={<Hoteles />} />
-          <Route path="/nosotros" element={<Nosotros />} />
-          <Route path="/contacto" element={<Contacto />} />
-          <Route path="/buscar/:searchToken" element={<BuscarVuelos />} />
-          <Route path="/condiciones-generales" element={<CondicionesGenerales />} />
-          <Route path="/proteccion-de-datos" element={<ProteccionDatos />} />
-          <Route path="/politica-privacidad" element={<PoliticaPrivacidad />} />
-          <Route path="/equipaje-permitido" element={<EquipajePermitido />} />
-          <Route path="/politica-cookies" element={<PoliticaCookies />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
+        <Outlet />
       </main>
       <Footer />
       <WhatsAppFab />

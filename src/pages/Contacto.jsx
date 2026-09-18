@@ -5,6 +5,7 @@ import SectionHeading from '../components/SectionHeading'
 import LeadForm from '../components/LeadForm'
 import ConsentGate from '../components/ConsentGate'
 import Reveal from '../components/Reveal'
+import Seo from '../components/Seo'
 import { contact, heroImages } from '../data/site'
 
 const channels = [
@@ -17,6 +18,7 @@ const channels = [
 export default function Contacto() {
   return (
     <>
+      <Seo />
       <PageHero image={heroImages.quito} kicker="Contacto" title="Hablemos de tu próximo viaje" intro="Tu opinión es muy importante. No dudes en consultarnos sobre tu destino soñado: te respondemos lo antes posible." />
 
       <section className="container-x py-20 sm:py-24">

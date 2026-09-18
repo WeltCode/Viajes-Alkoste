@@ -4,6 +4,7 @@ import SectionHeading from '../components/SectionHeading'
 import Reveal from '../components/Reveal'
 import ReviewMarquee from '../components/ReviewMarquee'
 import CTABand from '../components/CTABand'
+import Seo from '../components/Seo'
 import { company, values, heroImages } from '../data/site'
 
 const valueIcons = { Sparkles, HeartHandshake, ShieldCheck, Flag }
@@ -17,6 +18,7 @@ const pillars = [
 export default function Nosotros() {
   return (
     <>
+      <Seo />
       <PageHero
         image={heroImages.peru}
         kicker="Sobre nosotros"

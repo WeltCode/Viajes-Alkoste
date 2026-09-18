@@ -6,6 +6,7 @@ import DestinationRail from '../components/DestinationRail'
 import ServicesShowcase from '../components/ServicesShowcase'
 import CTABand from '../components/CTABand'
 import Reveal from '../components/Reveal'
+import Seo from '../components/Seo'
 import { heroImages, contact } from '../data/site'
 
 const perks = [
@@ -27,6 +28,7 @@ const steps = [
 export default function Vuelos() {
   return (
     <>
+      <Seo />
       <PageHero image={heroImages.main} kicker="Vuelos" title="Vuela a donde quieras, al mejor precio" intro="En Viajes Alkoste te ayudamos y acompañamos en todo el proceso para que tu destino soñado sea una realidad." />
 
       <section className="container-x -mt-12 pb-4">

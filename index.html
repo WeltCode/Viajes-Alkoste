@@ -3,18 +3,88 @@
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/png" href="/iconoalkoste.png" />
+    <link rel="apple-touch-icon" href="/iconoalkoste.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta
-      name="description"
-      content="Agencia de Viajes Alkoste — Vuelos baratos desde Madrid a Latinoamérica, paquetes, hoteles, seguros, ESTA y financiación. Asesoría personal desde 2002."
-    />
+    <meta name="theme-color" content="#08ACF2" />
+
+    <!-- El título, la descripción y el canonical los inyecta <Seo/> por página
+         (react-helmet-async). Aquí solo van metadatos que no cambian por ruta. -->
+    <meta name="author" content="Viajes Alkoste (SERINTG ALKOSTE, S.L.)" />
+    <meta name="geo.region" content="ES-M" />
+    <meta name="geo.placename" content="Madrid" />
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap"
       rel="stylesheet"
     />
-    <title>Agencia de Viajes Alkoste — Viajes a Latinoamérica desde Madrid</title>
+
+    <!-- Datos estructurados: negocio local (aparecer en Google Maps / búsquedas locales) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "TravelAgency",
+      "@id": "https://viajesalkoste.com/#organization",
+      "name": "Viajes Alkoste",
+      "legalName": "SERINTG ALKOSTE, S.L.",
+      "url": "https://viajesalkoste.com/",
+      "logo": "https://viajesalkoste.com/iconoalkoste.png",
+      "image": "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=1200&h=630&q=80",
+      "description": "Agencia de viajes en Madrid especializada en vuelos a Latinoamérica, paquetes, hoteles, seguros y ESTA. Desde 2002.",
+      "telephone": "+34910000187",
+      "email": "info@viajesalkoste.com",
+      "priceRange": "€€",
+      "currenciesAccepted": "EUR",
+      "vatID": "B88007521",
+      "foundingDate": "2002",
+      "slogan": "Tu agencia de viajes en Madrid",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Calle Azabache, 4",
+        "addressLocality": "Madrid",
+        "postalCode": "28019",
+        "addressRegion": "Madrid",
+        "addressCountry": "ES"
+      },
+      "hasMap": "https://www.google.com/maps/search/?api=1&query=C.+Azabache+4+28019+Madrid",
+      "areaServed": [
+        { "@type": "Country", "name": "España" },
+        { "@type": "Place", "name": "Latinoamérica" }
+      ],
+      "knowsLanguage": ["es", "en"],
+      "openingHoursSpecification": [
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+          "opens": "10:00",
+          "closes": "13:45"
+        }
+      ],
+      "sameAs": [
+        "https://www.instagram.com/viajesalkoste",
+        "https://www.facebook.com/viajesalkoste"
+      ],
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.9",
+        "reviewCount": "8",
+        "bestRating": "5",
+        "worstRating": "1"
+      }
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "@id": "https://viajesalkoste.com/#website",
+      "url": "https://viajesalkoste.com/",
+      "name": "Viajes Alkoste",
+      "inLanguage": "es-ES",
+      "publisher": { "@id": "https://viajesalkoste.com/#organization" }
+    }
+    </script>
   </head>
   <body>
     <div id="root"></div>

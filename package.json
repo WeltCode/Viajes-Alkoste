@@ -4,8 +4,8 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
+    "dev": "vite-react-ssg dev",
+    "build": "vite-react-ssg build",
     "preview": "vite preview"
   },
   "dependencies": {
@@ -13,7 +13,9 @@
     "lucide-react": "^0.446.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "react-router-dom": "^6.26.2"
+    "react-helmet-async": "^3.0.0",
+    "react-router-dom": "^6.26.2",
+    "vite-react-ssg": "^0.8.9"
   },
   "devDependencies": {
     "@vitejs/plugin-react": "^4.3.2",
