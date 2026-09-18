@@ -38,7 +38,15 @@ export default function Navbar() {
       }`}
     >
       <nav className={`container-x flex items-center justify-between gap-4 ${overHero ? 'text-white' : 'text-ink'}`}>
-        <Link to="/" aria-label="Inicio — Viajes Alkoste" className="shrink-0">
+        <Link
+          to="/"
+          aria-label="Inicio — Viajes Alkoste"
+          className="shrink-0"
+          onClick={() => {
+            // Si ya estamos en el home, sube al principio (la ruta no cambia).
+            if (pathname === '/') window.scrollTo({ top: 0, behavior: 'smooth' })
+          }}
+        >
           <img
             src={overHero ? logoLight : logoNormal}
             alt="Viajes Alkoste"
