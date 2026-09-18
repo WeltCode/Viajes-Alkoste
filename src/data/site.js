@@ -54,7 +54,7 @@ export const services = [
     icon: 'Plane',
     tagline: 'Las mejores tarifas a cualquier destino, con o sin equipaje.',
     body: 'Comparamos aerolíneas y rutas para encontrarte el mejor precio a Latinoamérica y al resto del mundo. Ida y vuelta o sólo ida, con el equipaje que necesites.',
-    image: img('photo-1436491865332-7a61a109cc05', 900),
+    image: img('photo-1507812984078-917a274065be', 900),
   },
   {
     id: 'alojamientos',
@@ -62,7 +62,7 @@ export const services = [
     icon: 'BedDouble',
     tagline: 'Desde hoteles hasta apartamentos. Tú eliges.',
     body: 'Desayuno, media pensión o todo incluido. Seleccionamos alojamientos que encajan con tu viaje y tu presupuesto.',
-    image: img('photo-1566073771259-6a8506099945', 900),
+    image: img('photo-1549294413-26f195200c16', 900),
   },
   {
     id: 'coches',
@@ -70,7 +70,7 @@ export const services = [
     icon: 'Car',
     tagline: 'Para los que arman su propia ruta.',
     body: 'Coches de alquiler en cualquier destino, con las coberturas que quieras, para moverte con total libertad.',
-    image: img('photo-1503376780353-7e6692767b70', 900),
+    image: img('photo-1542282088-fe8426682b8f', 900),
   },
   {
     id: 'seguros',
@@ -86,7 +86,7 @@ export const services = [
     icon: 'Luggage',
     tagline: 'Vuelo + hotel, con o sin actividades.',
     body: 'Diseñamos el paquete completo a tu medida: vuelo, hotel y excursiones. Nos adaptamos a ti.',
-    image: img('photo-1476514525535-07fb3b4ae5f1', 900),
+    image: img('photo-1632178151697-fd971baa906f', 900),
   },
   {
     id: 'tren-bus',
@@ -94,7 +94,7 @@ export const services = [
     icon: 'TrainFront',
     tagline: 'Para los más de servicios terrestres.',
     body: 'Trenes y autobuses para conectar ciudades y recorrer el territorio a tu ritmo.',
-    image: img('photo-1474487548417-781cb71495f3', 900),
+    image: img('photo-1763736810514-afceb64f702c', 900),
   },
   {
     id: 'visados',
@@ -102,7 +102,7 @@ export const services = [
     icon: 'StampIcon',
     tagline: 'Te gestionamos el ESTA y el visado de turista.',
     body: 'Tramitamos tu permiso ESTA para que viajes sin problemas. También gestionamos el visado de turista a Estados Unidos.',
-    image: img('photo-1485738422979-f5c462d49f74', 900),
+    image: img('photo-1576723658639-513237fdd520', 900),
   },
   {
     id: 'financiacion',
@@ -110,7 +110,7 @@ export const services = [
     icon: 'CreditCard',
     tagline: 'Vuela ahora, paga a plazos.',
     body: 'Financiación inmediata en la mayoría de nuestros servicios. Sin contratos, sin nóminas ni papeleo. Volar es más fácil con nosotros.',
-    image: img('photo-1554224155-6726b3ff858f', 900),
+    image: img('photo-1764231467896-73f0ef4438aa', 900),
   },
 ]
 
