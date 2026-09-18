@@ -32,14 +32,28 @@ export const googleReviewsUrl =
   import.meta.env.VITE_GOOGLE_REVIEWS_URL ||
   'https://www.google.com/search?q=Viajes+Alkoste+Madrid+opiniones'
 
-// Normalize a Google Places API review object into our shape.
+// Some feeds send the rating as a word ("FIVE") instead of a number.
+const STAR_WORDS = { ONE: 1, TWO: 2, THREE: 3, FOUR: 4, FIVE: 5 }
+function toRating(v) {
+  if (typeof v === 'number') return v
+  if (typeof v === 'string' && STAR_WORDS[v]) return STAR_WORDS[v]
+  const n = Number(v)
+  return Number.isFinite(n) ? n : 5
+}
+
+// Acepta el formato del Google Places API (author_name, rating, text…) y el de
+// Featurable (reviewer.displayName, starRating, comment…).
 function normalize(r) {
   return {
-    name: r.author_name || r.name || 'Cliente de Google',
-    rating: Math.round(r.rating ?? 5),
-    text: r.text || r.original_text?.text || '',
-    photo: r.profile_photo_url || null,
-    time: r.relative_time_description || r.relativePublishTimeDescription || '',
+    name: r.author_name || r.name || r.reviewer?.displayName || r.reviewerName || 'Cliente de Google',
+    rating: Math.round(toRating(r.rating ?? r.starRating ?? 5)),
+    text: r.text || r.comment || r.original_text?.text || '',
+    photo: r.profile_photo_url || r.reviewer?.profilePhotoUrl || r.profilePhotoUrl || null,
+    time:
+      r.relative_time_description ||
+      r.relativePublishTimeDescription ||
+      r.relativeTimeDescription ||
+      '',
   }
 }
 
@@ -57,7 +71,10 @@ export async function fetchGoogleReviews({ minRating = MIN_RATING, limit = 12 } 
     const res = await fetch(ENDPOINT)
     if (!res.ok) throw new Error(`Google reviews endpoint ${res.status}`)
     const json = await res.json()
-    const raw = Array.isArray(json) ? json : json.reviews || json.result?.reviews || []
+    // Places API → { result: { reviews } } · Featurable → { reviews } · o un array
+    const raw = Array.isArray(json)
+      ? json
+      : json.reviews || json.result?.reviews || json.data?.reviews || []
     const list = raw.map(normalize).filter(byRating).slice(0, limit)
     return list.length ? list : CURATED.filter(byRating).slice(0, limit)
   } catch (err) {

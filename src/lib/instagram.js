@@ -38,15 +38,26 @@ const PLACEHOLDER = [
   { id: 'p8', image: img('photo-1643302408853-a0171accc39b'), caption: '🌋 Aventura en los Andes ecuatorianos. Cotopaxi espera.', likes: 274, comments: 15 },
 ]
 
+// Acepta tanto el formato del Instagram Graph API (media_url, media_type…) como
+// el de Behold.so (mediaUrl, mediaType, sizes, prunedCaption…).
 function normalize(item) {
+  const sizes = item.sizes || {}
   return {
     id: item.id,
-    image: item.media_url || item.thumbnail_url || item.image,
-    caption: item.caption || '',
+    image:
+      item.media_url ||
+      item.mediaUrl ||
+      item.thumbnail_url ||
+      item.thumbnailUrl ||
+      sizes.medium?.mediaUrl ||
+      sizes.large?.mediaUrl ||
+      sizes.full?.mediaUrl ||
+      item.image,
+    caption: item.caption || item.prunedCaption || '',
     permalink: item.permalink || instagramProfileUrl,
     likes: item.like_count ?? item.likes ?? null,
     comments: item.comments_count ?? item.comments ?? null,
-    isVideo: item.media_type === 'VIDEO',
+    isVideo: item.media_type === 'VIDEO' || item.mediaType === 'VIDEO',
   }
 }
 
@@ -58,7 +69,8 @@ export async function fetchInstagramPosts(limit = 8) {
     const res = await fetch(`${ENDPOINT}?limit=${limit}`)
     if (!res.ok) throw new Error(`Instagram endpoint ${res.status}`)
     const json = await res.json()
-    const data = Array.isArray(json) ? json : json.data || []
+    // Graph API → { data: [...] } · Behold.so → { posts: [...] } · o un array pelado
+    const data = Array.isArray(json) ? json : json.data || json.posts || []
     return data.slice(0, limit).map(normalize)
   } catch (err) {
     console.warn('[instagram] falling back to placeholder feed:', err.message)
