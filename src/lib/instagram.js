@@ -23,19 +23,19 @@ const ENDPOINT = import.meta.env.VITE_INSTAGRAM_ENDPOINT || ''
 export const instagramProfileUrl = `https://www.instagram.com/${PROFILE}/`
 
 const img = (id, w = 800) =>
-  `https://images.unsplash.com/${id}?auto=format&fit=crop&w=${w}&q=80`
+  `https://images.unsplash.com/${id}?auto=format&fit=crop&w=${w}&q=85`
 
 // Curated placeholder posts so the section looks real before the API is wired.
 // Replace automatically once VITE_INSTAGRAM_ENDPOINT is set.
 const PLACEHOLDER = [
   { id: 'p1', image: img('photo-1587595431973-160d0d94add1'), caption: '✈️ Machu Picchu te espera. Vuelos desde Madrid al mejor precio.', likes: 342, comments: 18 },
-  { id: 'p2', image: img('photo-1512813195386-6cf811ad3542'), caption: '🌴 Escápate al Caribe este 2026. Cancún todo incluido.', likes: 528, comments: 41 },
-  { id: 'p3', image: img('photo-1558370781-d6196949e317'), caption: '🇪🇨 Vuelve a casa. Madrid ⇄ Quito con ofertas de temporada.', likes: 611, comments: 55 },
-  { id: 'p4', image: img('photo-1552832230-c0197dd311b5'), caption: '💃 Cartagena colonial, pura magia. Consúltanos tu paquete.', likes: 289, comments: 12 },
-  { id: 'p5', image: img('photo-1589909202802-8f4aadce1849'), caption: '🇧🇷 Río de Janeiro desde Madrid. ¿Te lo vas a perder?', likes: 447, comments: 27 },
-  { id: 'p6', image: img('photo-1483729558449-99ef09a8c325'), caption: '🇦🇷 Buenos Aires te llama. Financiación disponible.', likes: 356, comments: 19 },
-  { id: 'p7', image: img('photo-1516306580123-e6e52b1b7b5f'), caption: '🏝️ Punta Cana en modo relax. Reserva tu escapada.', likes: 502, comments: 33 },
-  { id: 'p8', image: img('photo-1568632234157-ce7aecd03d0d'), caption: '🌋 Aventura en los Andes ecuatorianos. Cotopaxi espera.', likes: 274, comments: 15 },
+  { id: 'p2', image: img('photo-1715393539878-b3c97c525567'), caption: '🌴 Escápate al Caribe este 2026. Cancún todo incluido.', likes: 528, comments: 41 },
+  { id: 'p3', image: img('photo-1706200972821-615812a4fbe5'), caption: '🇪🇨 Vuelve a casa. Madrid ⇄ Quito con ofertas de temporada.', likes: 611, comments: 55 },
+  { id: 'p4', image: img('photo-1536308037887-165852797016'), caption: '💃 Cartagena colonial, pura magia. Consúltanos tu paquete.', likes: 289, comments: 12 },
+  { id: 'p5', image: img('photo-1483729558449-99ef09a8c325'), caption: '🇧🇷 Río de Janeiro desde Madrid. ¿Te lo vas a perder?', likes: 447, comments: 27 },
+  { id: 'p6', image: img('photo-1589909202802-8f4aadce1849'), caption: '🇦🇷 Buenos Aires te llama. Financiación disponible.', likes: 356, comments: 19 },
+  { id: 'p7', image: img('photo-1692017827893-f97d95397b49'), caption: '🏝️ Punta Cana en modo relax. Reserva tu escapada.', likes: 502, comments: 33 },
+  { id: 'p8', image: img('photo-1643302408853-a0171accc39b'), caption: '🌋 Aventura en los Andes ecuatorianos. Cotopaxi espera.', likes: 274, comments: 15 },
 ]
 
 function normalize(item) {

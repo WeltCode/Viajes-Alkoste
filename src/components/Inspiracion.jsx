@@ -4,7 +4,7 @@ import SectionHeading from './SectionHeading'
 import { contact } from '../data/site'
 
 const IMG = 'https://images.unsplash.com'
-const img = (id, w = 1400) => `${IMG}/${id}?auto=format&fit=crop&w=${w}&q=80`
+const img = (id, w = 1400) => `${IMG}/${id}?auto=format&fit=crop&w=${w}&q=85`
 
 // Themed travel inspiration — no prices, no promos. Each links to WhatsApp.
 const themes = [
@@ -21,7 +21,7 @@ const themes = [
     kicker: 'Naturaleza',
     title: 'Aventura y naturaleza',
     line: 'Volcanes, selvas y paisajes que te dejan sin aliento.',
-    image: img('photo-1568632234157-ce7aecd03d0d'),
+    image: img('photo-1643302408853-a0171accc39b'),
     span: 'lg:col-span-2',
   },
   {
@@ -29,7 +29,7 @@ const themes = [
     kicker: 'Cultura',
     title: 'Ciudades con historia',
     line: 'Calles coloniales, sabores y color.',
-    image: img('photo-1552832230-c0197dd311b5'),
+    image: img('photo-1536308037887-165852797016'),
     span: 'lg:col-span-1',
   },
   {
@@ -37,7 +37,7 @@ const themes = [
     kicker: 'En pareja',
     title: 'Escapadas románticas',
     line: 'Momentos para dos, lejos de todo.',
-    image: img('photo-1516306580123-e6e52b1b7b5f'),
+    image: img('photo-1692017827893-f97d95397b49'),
     span: 'lg:col-span-1',
   },
   {
@@ -45,7 +45,7 @@ const themes = [
     kicker: 'En familia',
     title: 'Viajes en familia',
     line: 'Recuerdos que duran toda la vida.',
-    image: img('photo-1512813195386-6cf811ad3542'),
+    image: img('photo-1715393539878-b3c97c525567'),
     span: 'lg:col-span-2',
   },
   {
@@ -53,7 +53,7 @@ const themes = [
     kicker: 'Vuelve a casa',
     title: 'Reencuéntrate con los tuyos',
     line: 'Ese abrazo que llevas tiempo esperando.',
-    image: img('photo-1558370781-d6196949e317'),
+    image: img('photo-1706200972821-615812a4fbe5'),
     span: 'lg:col-span-2',
   },
 ]

@@ -3,7 +3,7 @@
 // are authored placeholders to replace with the agency's real figures.
 
 const IMG = 'https://images.unsplash.com'
-const img = (id, w = 1200) => `${IMG}/${id}?auto=format&fit=crop&w=${w}&q=80`
+const img = (id, w = 1200) => `${IMG}/${id}?auto=format&fit=crop&w=${w}&q=85`
 
 export const contact = {
   legalName: 'SERINTG ALKOSTE, S.L.',
@@ -36,7 +36,7 @@ export const heroVideoSm = '/videos/hero-avion-sm.mp4' // 540p — mobile (light
 export const heroImages = {
   main: img('photo-1507525428034-b723cf961d3e', 2400), // tropical coast
   poster: img('photo-1436491865332-7a61a109cc05', 2000), // airplane wing / clouds (video poster)
-  quito: img('photo-1558370781-d6196949e317', 1600),
+  quito: img('photo-1706200972821-615812a4fbe5', 1600),
   peru: img('photo-1587595431973-160d0d94add1', 1600),
 }
 
@@ -116,14 +116,14 @@ export const services = [
 
 // Prices below are illustrative placeholders — replace with real fares.
 export const destinations = [
-  { id: 'quito', city: 'Quito', country: 'Ecuador', image: img('photo-1558370781-d6196949e317'), rating: 4.9, price: 599, tag: 'Más vendido' },
-  { id: 'guayaquil', city: 'Cotopaxi & Andes', country: 'Ecuador', image: img('photo-1568632234157-ce7aecd03d0d'), rating: 4.8, price: 629 },
+  { id: 'quito', city: 'Quito', country: 'Ecuador', image: img('photo-1706200972821-615812a4fbe5'), rating: 4.9, price: 599, tag: 'Más vendido' },
+  { id: 'guayaquil', city: 'Cotopaxi & Andes', country: 'Ecuador', image: img('photo-1643302408853-a0171accc39b'), rating: 4.8, price: 629 },
   { id: 'lima', city: 'Machu Picchu', country: 'Perú', image: img('photo-1587595431973-160d0d94add1'), rating: 5.0, price: 689, tag: 'Icónico' },
-  { id: 'cartagena', city: 'Cartagena', country: 'Colombia', image: img('photo-1552832230-c0197dd311b5'), rating: 4.8, price: 549 },
-  { id: 'cancun', city: 'Cancún', country: 'México', image: img('photo-1512813195386-6cf811ad3542'), rating: 4.7, price: 579, tag: 'Playa' },
-  { id: 'rio', city: 'Río de Janeiro', country: 'Brasil', image: img('photo-1589909202802-8f4aadce1849'), rating: 4.9, price: 719 },
-  { id: 'buenosaires', city: 'Buenos Aires', country: 'Argentina', image: img('photo-1483729558449-99ef09a8c325'), rating: 4.8, price: 759 },
-  { id: 'puntacana', city: 'Punta Cana', country: 'R. Dominicana', image: img('photo-1516306580123-e6e52b1b7b5f'), rating: 4.9, price: 639, tag: 'Todo incluido' },
+  { id: 'cartagena', city: 'Cartagena', country: 'Colombia', image: img('photo-1536308037887-165852797016'), rating: 4.8, price: 549 },
+  { id: 'cancun', city: 'Cancún', country: 'México', image: img('photo-1715393539878-b3c97c525567'), rating: 4.7, price: 579, tag: 'Playa' },
+  { id: 'rio', city: 'Río de Janeiro', country: 'Brasil', image: img('photo-1483729558449-99ef09a8c325'), rating: 4.9, price: 719 },
+  { id: 'buenosaires', city: 'Buenos Aires', country: 'Argentina', image: img('photo-1589909202802-8f4aadce1849'), rating: 4.8, price: 759 },
+  { id: 'puntacana', city: 'Punta Cana', country: 'R. Dominicana', image: img('photo-1692017827893-f97d95397b49'), rating: 4.9, price: 639, tag: 'Todo incluido' },
 ]
 
 export const news = [
@@ -139,7 +139,7 @@ export const news = [
     title: 'Vuela a Ecuador desde Madrid al mejor precio',
     excerpt: 'Tarifas especiales Madrid ⇄ Quito y Guayaquil. Plazas limitadas.',
     date: 'Ene 2026',
-    image: img('photo-1558370781-d6196949e317', 800),
+    image: img('photo-1706200972821-615812a4fbe5', 800),
   },
   {
     id: 3,
@@ -153,7 +153,7 @@ export const news = [
     title: 'Ofertas irresistibles a Latinoamérica',
     excerpt: 'Descuentos por reserva anticipada en las rutas más solicitadas.',
     date: 'Dic 2025',
-    image: img('photo-1552832230-c0197dd311b5', 800),
+    image: img('photo-1536308037887-165852797016', 800),
   },
 ]
 

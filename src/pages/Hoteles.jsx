@@ -7,7 +7,7 @@ import Seo from '../components/Seo'
 import { contact } from '../data/site'
 
 const IMG = 'https://images.unsplash.com'
-const img = (id) => `${IMG}/${id}?auto=format&fit=crop&w=1200&q=80`
+const img = (id) => `${IMG}/${id}?auto=format&fit=crop&w=1200&q=85`
 
 const boards = [
   { icon: Coffee, title: 'Solo alojamiento', text: 'La base perfecta para explorar a tu aire.' },
