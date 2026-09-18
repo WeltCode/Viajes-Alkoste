@@ -42,22 +42,31 @@ const PLACEHOLDER = [
 // el de Behold.so (mediaUrl, mediaType, sizes, prunedCaption…).
 function normalize(item) {
   const sizes = item.sizes || {}
+  const type = item.media_type || item.mediaType || 'IMAGE'
+  const isVideo = type === 'VIDEO'
+  const isCarousel = type === 'CAROUSEL_ALBUM'
+
+  // Imagen/póster: preferimos el CDN estable de Behold (behold.pictures) sobre la
+  // URL directa de Instagram (que puede caducar). Para vídeos, es el fotograma.
+  const image =
+    sizes.large?.mediaUrl ||
+    sizes.medium?.mediaUrl ||
+    sizes.full?.mediaUrl ||
+    item.thumbnail_url ||
+    item.thumbnailUrl ||
+    (!isVideo ? item.media_url || item.mediaUrl || item.image : null)
+
   return {
     id: item.id,
-    image:
-      item.media_url ||
-      item.mediaUrl ||
-      item.thumbnail_url ||
-      item.thumbnailUrl ||
-      sizes.medium?.mediaUrl ||
-      sizes.large?.mediaUrl ||
-      sizes.full?.mediaUrl ||
-      item.image,
+    image,
+    // URL del vídeo reproducible (solo en posts de vídeo).
+    video: isVideo ? item.media_url || item.mediaUrl || null : null,
+    isVideo,
+    isCarousel,
     caption: item.caption || item.prunedCaption || '',
     permalink: item.permalink || instagramProfileUrl,
-    likes: item.like_count ?? item.likes ?? null,
-    comments: item.comments_count ?? item.comments ?? null,
-    isVideo: item.media_type === 'VIDEO' || item.mediaType === 'VIDEO',
+    likes: item.like_count ?? item.likeCount ?? item.likes ?? null,
+    comments: item.comments_count ?? item.commentsCount ?? item.comments ?? null,
   }
 }
 

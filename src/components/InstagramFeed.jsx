@@ -1,9 +1,8 @@
 import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
-import { Instagram, Heart, MessageCircle, ArrowUpRight } from 'lucide-react'
+import { Instagram, Heart, MessageCircle, ArrowUpRight, Play, Layers } from 'lucide-react'
 import SectionHeading from './SectionHeading'
 import { fetchInstagramPosts, instagramProfileUrl } from '../lib/instagram'
-import { contact } from '../data/site'
 
 function Tile({ post, index }) {
   return (
@@ -14,15 +13,36 @@ function Tile({ post, index }) {
       initial={{ opacity: 0, scale: 0.92, y: 24 }}
       whileInView={{ opacity: 1, scale: 1, y: 0 }}
       viewport={{ once: true, amount: 0.3 }}
-      transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1], delay: (index % 4) * 0.07 }}
+      transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1], delay: (index % 3) * 0.08 }}
       className="group relative aspect-square overflow-hidden rounded-2xl bg-mist shadow-card"
     >
-      <img
-        src={post.image}
-        alt={post.caption?.slice(0, 80) || 'Publicación de Instagram de Viajes Alkoste'}
-        loading="lazy"
-        className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
-      />
+      {post.isVideo && post.video ? (
+        <video
+          src={post.video}
+          poster={post.image || undefined}
+          muted
+          loop
+          playsInline
+          autoPlay
+          preload="metadata"
+          className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
+        />
+      ) : (
+        <img
+          src={post.image}
+          alt={post.caption?.slice(0, 80) || 'Publicación de Instagram de Viajes Alkoste'}
+          loading="lazy"
+          className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
+        />
+      )}
+
+      {/* indicador de tipo (vídeo / carrusel) */}
+      {(post.isVideo || post.isCarousel) && (
+        <span className="absolute left-3 top-3 grid h-7 w-7 place-items-center rounded-full bg-ink/55 text-white backdrop-blur-sm">
+          {post.isVideo ? <Play className="h-3.5 w-3.5 fill-white" /> : <Layers className="h-3.5 w-3.5" />}
+        </span>
+      )}
+
       {/* hover overlay */}
       <div className="absolute inset-0 flex flex-col justify-end bg-gradient-to-t from-ink/85 via-ink/20 to-transparent p-4 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
         <p className="line-clamp-3 text-xs font-medium leading-relaxed text-white">{post.caption}</p>
@@ -54,7 +74,7 @@ export default function InstagramFeed() {
 
   useEffect(() => {
     let alive = true
-    fetchInstagramPosts(8).then((data) => alive && setPosts(data))
+    fetchInstagramPosts(6).then((data) => alive && setPosts(data))
     return () => {
       alive = false
     }
@@ -81,9 +101,9 @@ export default function InstagramFeed() {
           </a>
         </div>
 
-        <div className="mt-12 grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-4">
+        <div className="mt-12 grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-3">
           {posts === null
-            ? Array.from({ length: 8 }).map((_, i) => <Skeleton key={i} />)
+            ? Array.from({ length: 6 }).map((_, i) => <Skeleton key={i} />)
             : posts.map((p, i) => <Tile key={p.id} post={p} index={i} />)}
         </div>
 
