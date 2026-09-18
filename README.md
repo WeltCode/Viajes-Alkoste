@@ -51,6 +51,8 @@ sencilla, con una imagen moderna y de confianza.
 |---|---|
 | 🎬 **Hero con vídeo** | Vista desde la ventana de un avión, con una ruta de vuelo animada muy sutil. |
 | 🔎 **Buscador de vuelos real** | Autocompletado de aeropuertos (IATA) y conexión al motor de reservas. |
+| 🏨 **Buscador de hoteles real** | Formulario propio con autocompletado en vivo del motor de Veturis y resultados integrados en la web. |
+| 🚀 **SEO optimizado** | Cada página se pre-renderiza a HTML (SSG), con meta tags, Open Graph y datos estructurados de negocio local (Madrid). |
 | 🗺️ **Páginas** | Inicio, Vuelos, Hoteles, Nosotros, Contacto + resultados de vuelos. |
 | 📸 **Instagram** | Sección lista para mostrar el feed real de `@viajesalkoste`. |
 | ⭐ **Reseñas de Google** | Carrusel de reseñas, filtrado a **4–5 estrellas**. |
@@ -116,6 +118,39 @@ El motor pinta los resultados dentro de la web (con navbar y footer)
 Archivos clave: `src/lib/flightBridge.js`, `src/components/SearchWidget.jsx`,
 `src/pages/BuscarVuelos.jsx`, `public/data/airports.json`.
 
+### 1.b) El buscador de hoteles
+
+Mismo enfoque que el de vuelos, pero contra el motor de **Veturis**:
+
+- **Autocompletado en vivo:** el destino/hotel se consulta al motor real de Veturis
+  mediante **JSONP** (`autocomplete.php`), que esquiva CORS sin necesidad de backend.
+- **Resultados integrados:** al buscar se monta la URL `resultadosBusqueda.php?...` y
+  se carga en un `<iframe>` dentro de `/hoteles`, conservando navbar y footer.
+- **"Los más destacados":** tarjetas con el diseño de la web a partir de las ofertas
+  reales del motor; cada una abre su disponibilidad en el buscador integrado.
+- Mientras carga, una **animación de búsqueda** (tarjetas-esqueleto, mensajes rotando).
+
+Archivos clave: `src/lib/hotelBridge.js`, `src/components/HotelSearchWidget.jsx`,
+`src/components/HotelSearchLoader.jsx`, `src/pages/Hoteles.jsx`.
+
+> ⚠️ El motor es de otro dominio: los resultados se ven dentro del iframe con su propio
+> estilo, y no se puede eliminar del todo su scroll interno (limitación del navegador
+> con iframes externos). Para lograrlo, el proveedor debería enviar su altura por
+> `postMessage`.
+
+### 1.c) SEO (para aparecer en Google)
+
+La web es una SPA pero se **pre-renderiza a HTML estático por ruta** con
+[`vite-react-ssg`](https://github.com/Daydreamer-riri/vite-react-ssg), así Google indexa
+cada página con su contenido. Cada página define su `<title>`, descripción, canonical,
+Open Graph y Twitter Card con el componente `src/components/Seo.jsx` (metadatos en
+`src/seo/pages.js`). En `index.html` van los **datos estructurados JSON-LD** de negocio
+local (`TravelAgency`, con dirección de Madrid, teléfono, horario…), clave para las
+búsquedas locales. Se completan con `public/robots.txt` y `public/sitemap.xml`.
+
+> Para que la agencia salga arriba en Google hace falta, además, **verificar el dominio en
+> Google Search Console** (y enviar el sitemap) y **reclamar el Perfil de Empresa de Google**.
+
 ### 2) El formulario de contacto (sin backend)
 
 Al enviar, usa **Web3Forms** (si configuras su clave) para que la consulta llegue por
@@ -148,6 +183,9 @@ la web funciona con contenidos de ejemplo.
 | `VITE_INSTAGRAM_ENDPOINT` | URL del feed de Instagram (p. ej. Behold.so). |
 | `VITE_GOOGLE_REVIEWS_ENDPOINT` | URL del feed de reseñas de Google (p. ej. Featurable). |
 | `VITE_GOOGLE_REVIEWS_URL` | Enlace a tu perfil/reseñas de Google. |
+| `VITE_SITE_URL` | URL pública del sitio (para canonical/Open Graph/sitemap). Por defecto `https://viajesalkoste.com`. |
+
+> El buscador de hoteles no necesita clave: usa el motor de Veturis ya configurado.
 
 > Tras editar `.env`, reinicia `npm run dev`.
 
@@ -159,22 +197,28 @@ la web funciona con contenidos de ejemplo.
 viajes_alkoste/
 ├─ public/
 │  ├─ iconoalkoste.png        # favicon (icono de la web)
-│  ├─ data/airports.json      # aeropuertos para el autocompletado
+│  ├─ robots.txt · sitemap.xml # SEO
+│  ├─ data/airports.json      # aeropuertos para el autocompletado de vuelos
 │  └─ videos/                 # vídeos del hero (avión)
 ├─ src/
 │  ├─ assets/                 # logos e imágenes locales
-│  ├─ components/             # navbar, footer, buscador, banner cookies…
-│  │  ├─ SearchWidget.jsx     # el buscador de vuelos
-│  │  ├─ FlightSearchLoader.jsx  # animación mientras busca
+│  ├─ components/             # navbar, footer, buscadores, banner cookies…
+│  │  ├─ SearchWidget.jsx     # buscador de vuelos
+│  │  ├─ FlightSearchLoader.jsx  # animación de búsqueda de vuelos
+│  │  ├─ HotelSearchWidget.jsx   # buscador de hoteles (autocompletado JSONP)
+│  │  ├─ HotelSearchLoader.jsx   # animación de búsqueda de hoteles
+│  │  ├─ Seo.jsx              # <head> por página (title, OG, canonical…)
 │  │  ├─ CookieConsent.jsx    # banner RGPD
 │  │  └─ …
 │  ├─ pages/                  # Home, Vuelos, Hoteles, Nosotros, Contacto…
-│  │  ├─ BuscarVuelos.jsx     # resultados del buscador (/buscar/:token)
+│  │  ├─ BuscarVuelos.jsx     # resultados de vuelos (/buscar/:token)
 │  │  └─ legal/               # páginas legales (RGPD/LSSI)
-│  ├─ lib/                    # flightBridge, cookieConsent, instagram, googleReviews
+│  ├─ lib/                    # flightBridge, hotelBridge, cookieConsent, instagram, googleReviews
+│  ├─ seo/pages.js            # metadatos SEO por ruta
 │  ├─ data/site.js            # textos y datos centralizados de la agencia
-│  ├─ App.jsx                 # rutas
-│  └─ main.jsx                # punto de entrada
+│  ├─ routes.jsx              # rutas como datos (para el prerender SSG)
+│  ├─ App.jsx                 # layout (navbar/footer + <Outlet/>)
+│  └─ main.jsx                # punto de entrada (ViteReactSSG)
 ├─ .env.example               # plantilla de variables
 ├─ ROADMAP.md                 # plan paso a paso (qué falta y cómo)
 ├─ PRODUCT.md · DESIGN.md     # contexto de producto y de diseño
@@ -188,7 +232,9 @@ viajes_alkoste/
 | Integración | Estado | Qué falta |
 |---|---|---|
 | Buscador de vuelos | 🟢 Conectado | Que el proveedor active el puente `QueryBridge.aspx` para `ak`. |
-| Formulario (email) | 🟡 Listo | Poner `VITE_WEB3FORMS_KEY`. |
+| Buscador de hoteles | 🟢 Conectado | (Opcional) que Veturis envíe su altura por `postMessage` para quitar el scroll interno. |
+| SEO (prerender + JSON-LD) | 🟢 Hecho | Verificar dominio en Search Console + Perfil de Empresa de Google (tras desplegar). |
+| Formulario (email) | 🟢 Activo (local) | Poner `VITE_WEB3FORMS_KEY` también en el hosting al desplegar. |
 | Instagram | 🟡 Listo | Poner `VITE_INSTAGRAM_ENDPOINT` (Behold, etc.). |
 | Reseñas Google (4–5★) | 🟡 Listo | Poner `VITE_GOOGLE_REVIEWS_ENDPOINT` (Featurable, etc.). |
 | Cookies / legal | 🟢 Hecho | Revisión por asesor legal antes de producción. |

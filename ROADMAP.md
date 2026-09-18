@@ -29,12 +29,14 @@ Antes de integrar nada, dar de alta:
 ## FASE 1 — Integraciones sin backend (rellenar `.env`)
 El código ya está preparado; solo faltan las claves. Copiar `.env.example` a `.env`.
 
-### 1.1 Formulario de contacto 🟡 (código listo, falta clave)
+### 1.1 Formulario de contacto 🟢 (activo en local, falta clave de producción)
 - **Servicio:** Web3Forms (client-side, sin backend).
 - **Cómo:** crear access key en web3forms.com → `.env`: `VITE_WEB3FORMS_KEY=...`
+- **Estado:** clave puesta en `.env` local; al desplegar, añadirla en el hosting.
 - **Resultado:** los envíos llegan al email. Sin clave, cae en WhatsApp (fallback ya implementado).
 - Archivo: `src/components/LeadForm.jsx`.
-- Alternativas equivalentes: Formspree, EmailJS, Getform.
+- Los adaptadores `src/lib/instagram.js` y `src/lib/googleReviews.js` ya reconocen el
+  formato JSON de **Behold** y **Featurable** (basta pegar el endpoint en `.env`).
 
 ### 1.2 Feed de Instagram 🟡 (código listo, falta endpoint)
 - **Servicio:** Behold.so (gratis) → da una URL JSON del feed. (Alt: LightWidget, EmbedSocial, SnapWidget, o función serverless con token.)
@@ -70,17 +72,28 @@ Marcado en `src/data/site.js` y componentes.
 
 ---
 
-## FASE 4 — SEO y analítica (sin backend)
-- 🔴 **Meta tags por página** (title, description, Open Graph/Twitter): usar `react-helmet-async` o el prerender.
-- 🔴 **Datos estructurados** JSON-LD `TravelAgency`/`LocalBusiness` (nombre, CIF, dirección, teléfono, horario, reseñas).
-- 🔴 **Prerender/SSG** para que Google indexe la SPA: `vite-react-ssg` o `react-snap` (genera HTML estático en el build; **no** requiere backend).
-- 🔴 **sitemap.xml** y **robots.txt**.
-- 🔴 **Analítica** (opcional, gratis, sin backend): **Cloudflare Web Analytics** o **Plausible**/GA4 (gatear tras consentimiento).
+## FASE 4 — SEO y analítica (sin backend) ✅ (base hecha)
+- 🟢 **Meta tags por página** (title, description, canonical, Open Graph/Twitter): `Seo.jsx` con `react-helmet-async`; metadatos en `src/seo/pages.js`.
+- 🟢 **Datos estructurados** JSON-LD `TravelAgency`/`LocalBusiness` (nombre, CIF, dirección Madrid, teléfono, horario, valoración) + `WebSite` + breadcrumbs. En `index.html` y `Seo.jsx`.
+- 🟢 **Prerender/SSG**: `vite-react-ssg` genera un HTML por ruta en el build. `npm run build` ya lo hace.
+- 🟢 **sitemap.xml** y **robots.txt** en `public/`.
 - 🟢 Favicon e íconos: hecho.
+- 🔴 **Verificar en Google Search Console** (dominio + enviar sitemap) y **Perfil de Empresa de Google** — imprescindible para posicionar en local; se hace **tras desplegar**.
+- 🔴 **Analítica** (opcional, gratis, sin backend): **Cloudflare Web Analytics** o **Plausible**/GA4 (gatear tras consentimiento).
 
 ---
 
-## FASE 5 — Buscador de vuelos ✅ funcional (motor externo)
+## FASE 5 — Buscadores (vuelos y hoteles) ✅ funcionales (motores externos)
+
+### 5.a Buscador de hoteles (motor Veturis) 🟢
+- 🟢 **Formulario propio** (`HotelSearchWidget`) con el diseño de la web.
+- 🟢 **Autocompletado en vivo** de destinos/hoteles vía **JSONP** (`autocomplete.php`), sin CORS ni backend.
+- 🟢 **Resultados embebidos** en `/hoteles` (`resultadosBusqueda.php` en `<iframe>`), con navbar/footer y animación de carga.
+- 🟢 **"Los más destacados"** con el diseño de la web a partir de ofertas reales del motor.
+- ⚠️ El iframe es de otro dominio: no se puede quitar del todo su scroll interno salvo que Veturis envíe su altura por `postMessage` (pedírselo al proveedor).
+- Archivos: `src/lib/hotelBridge.js`, `src/components/HotelSearchWidget.jsx`, `src/components/HotelSearchLoader.jsx`, `src/pages/Hoteles.jsx`.
+
+### 5.b Buscador de vuelos ✅ funcional (motor externo)
 El buscador del hero está **conectado al motor de vuelos** de Alkoste con el mismo contrato
 que el proyecto Vicente Viajes:
 - 🟢 **Autocompletado de aeropuertos** por ciudad/IATA (`public/data/airports.json`, 3.689 aeropuertos; `src/lib/flightBridge.js`).
