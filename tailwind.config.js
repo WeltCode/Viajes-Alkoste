@@ -62,6 +62,7 @@ export default {
       animation: {
         marquee: 'marquee 42s linear infinite',
         floaty: 'floaty 6s ease-in-out infinite',
+        shimmer: 'sheen 1.6s ease-in-out infinite',
       },
     },
   },

@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion'
 import { ArrowUpRight } from 'lucide-react'
 import SectionHeading from './SectionHeading'
+import SmartImage from './SmartImage'
 import { contact } from '../data/site'
 
 const IMG = 'https://images.unsplash.com'
@@ -71,11 +72,10 @@ function Tile({ t, index }) {
       transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1], delay: (index % 3) * 0.08 }}
       className={`group relative min-h-[15rem] overflow-hidden rounded-3xl shadow-soft ${t.span}`}
     >
-      <img
+      <SmartImage
         src={t.image}
         alt={t.title}
-        loading="lazy"
-        className="absolute inset-0 h-full w-full object-cover transition-transform duration-[1.1s] ease-out group-hover:scale-110"
+        className="transition-transform duration-[1.1s] ease-out group-hover:scale-110"
       />
       <div className="absolute inset-0 bg-gradient-to-t from-ink/90 via-ink/25 to-transparent" />
       <div className="relative flex h-full flex-col justify-end p-6">

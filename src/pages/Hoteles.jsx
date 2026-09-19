@@ -8,6 +8,7 @@ import Reveal from '../components/Reveal'
 import Seo from '../components/Seo'
 import HotelSearchWidget from '../components/HotelSearchWidget'
 import HotelSearchLoader from '../components/HotelSearchLoader'
+import SmartImage from '../components/SmartImage'
 import { FEATURED_HOTELS, featuredHotelUrl } from '../lib/hotelBridge'
 
 const MIN_LOADER_MS = 2600 // tiempo mínimo para disfrutar la animación de búsqueda
@@ -45,8 +46,8 @@ function FeaturedCard({ h, i, onOpen }) {
       <button type="button" onClick={() => onOpen(h)}
         className="card group flex h-full w-full flex-col overflow-hidden text-left hover:-translate-y-1.5 hover:shadow-lift">
         <div className="relative aspect-[4/3] overflow-hidden">
-          <img src={h.image} alt={`${h.hotel} — ${h.zona}`} loading="lazy"
-            className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110" />
+          <SmartImage src={h.image} alt={`${h.hotel} — ${h.zona}`}
+            className="transition-transform duration-700 group-hover:scale-110" />
           <span className="absolute left-3 top-3 rounded-full bg-cyan-500 px-2.5 py-1 text-xs font-bold text-white shadow-glow">{h.board}</span>
           <span className="absolute right-3 top-3 rounded-full bg-white/90 px-2.5 py-1 text-xs font-bold text-ink backdrop-blur">{h.zona}</span>
         </div>
@@ -101,8 +102,8 @@ export default function Hoteles() {
       <Seo />
 
       {/* HERO con buscador */}
-      <section className="relative overflow-hidden">
-        <img src={heroImg} alt="" aria-hidden="true" className="absolute inset-0 h-full w-full object-cover" />
+      <section className="relative overflow-hidden bg-ink">
+        <SmartImage src={heroImg} alt="" aria-hidden="true" />
         <div className="absolute inset-0 bg-gradient-to-b from-ink/80 via-ink/65 to-ink/85" aria-hidden="true" />
         <div className="container-x relative grid gap-10 pb-16 pt-32 sm:pt-36 lg:grid-cols-[1fr_minmax(0,32rem)] lg:items-center lg:gap-8 lg:pb-24 lg:pt-40">
           <div>

@@ -1,6 +1,7 @@
 import { Phone } from 'lucide-react'
 import WhatsAppIcon from './WhatsAppIcon'
 import Reveal from './Reveal'
+import SmartImage from './SmartImage'
 import { contact, heroImages } from '../data/site'
 
 export default function CTABand({
@@ -11,7 +12,7 @@ export default function CTABand({
   return (
     <section className="container-x py-20 sm:py-28">
       <div className="relative overflow-hidden rounded-[36px] shadow-lift">
-        <img src={heroImages.peru} alt="" aria-hidden="true" className="absolute inset-0 h-full w-full object-cover" />
+        <SmartImage src={heroImages.peru} alt="" aria-hidden="true" />
         <div className="absolute inset-0 bg-gradient-to-br from-cyan-900/85 via-ink/80 to-ink/70" />
         <div className="pointer-events-none absolute -right-16 top-1/2 h-80 w-80 -translate-y-1/2 rounded-full bg-cyan-500/40 blur-[110px]" aria-hidden="true" />
         <div className="relative flex flex-col items-center gap-6 px-6 py-16 text-center sm:px-12 sm:py-20">

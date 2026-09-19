@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { Plane, BedDouble, Car, ShieldCheck, Luggage, TrainFront, Stamp, CreditCard, Plus } from 'lucide-react'
 import { services } from '../data/site'
+import SmartImage from './SmartImage'
 
 const icons = { Plane, BedDouble, Car, ShieldCheck, Luggage, TrainFront, StampIcon: Stamp, CreditCard }
 
@@ -72,7 +73,7 @@ export default function ServicesShowcase() {
             transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
             className="absolute inset-0"
           >
-            <img src={current.image} alt={current.name} className="h-full w-full object-cover" />
+            <SmartImage src={current.image} alt={current.name} />
             <div className="absolute inset-0 bg-gradient-to-t from-ink/85 via-ink/25 to-transparent" />
           </motion.div>
         </AnimatePresence>

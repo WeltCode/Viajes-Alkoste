@@ -2,6 +2,7 @@ import { Sparkles, HeartHandshake, ShieldCheck, Flag, Target, Compass, Rocket } 
 import PageHero from '../components/PageHero'
 import SectionHeading from '../components/SectionHeading'
 import Reveal from '../components/Reveal'
+import SmartImage from '../components/SmartImage'
 import ReviewMarquee from '../components/ReviewMarquee'
 import CTABand from '../components/CTABand'
 import Seo from '../components/Seo'
@@ -29,8 +30,8 @@ export default function Nosotros() {
       <section className="container-x py-20 sm:py-28">
         <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
           <Reveal className="relative">
-            <div className="overflow-hidden rounded-[32px] shadow-lift">
-              <img src={heroImages.quito} alt="Quito, Ecuador — origen de Viajes Alkoste" className="h-full w-full object-cover" />
+            <div className="relative aspect-[4/5] overflow-hidden rounded-[32px] shadow-lift">
+              <SmartImage src={heroImages.quito} alt="Quito, Ecuador — origen de Viajes Alkoste" />
             </div>
             <div className="absolute -bottom-6 -right-4 rounded-3xl border border-line bg-white p-5 shadow-lift sm:-right-6">
               <p className="font-display text-4xl font-extrabold text-cyan-500">2002</p>

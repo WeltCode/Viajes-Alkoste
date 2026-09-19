@@ -28,7 +28,7 @@ export default function Home() {
     <>
       <Seo />
       {/* HERO — video */}
-      <section className="relative min-h-[100svh] overflow-hidden">
+      <section className="relative min-h-[100svh] overflow-hidden bg-ink">
         <video
           className="absolute inset-0 h-full w-full object-cover"
           poster={heroImages.poster}

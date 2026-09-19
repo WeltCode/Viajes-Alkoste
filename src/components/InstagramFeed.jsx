@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import { Instagram, Heart, MessageCircle, ArrowUpRight, Play, Layers } from 'lucide-react'
 import SectionHeading from './SectionHeading'
+import SmartImage from './SmartImage'
 import { fetchInstagramPosts, instagramProfileUrl } from '../lib/instagram'
 
 function Tile({ post, index }) {
@@ -28,11 +29,10 @@ function Tile({ post, index }) {
           className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
         />
       ) : (
-        <img
+        <SmartImage
           src={post.image}
           alt={post.caption?.slice(0, 80) || 'Publicación de Instagram de Viajes Alkoste'}
-          loading="lazy"
-          className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
+          className="transition-transform duration-700 ease-out group-hover:scale-110"
         />
       )}
 
@@ -66,7 +66,11 @@ function Tile({ post, index }) {
 }
 
 function Skeleton() {
-  return <div className="aspect-square animate-pulse rounded-2xl bg-mist" />
+  return (
+    <div className="relative aspect-square overflow-hidden rounded-2xl bg-ink/[0.06]">
+      <span className="absolute inset-0 -translate-x-full animate-shimmer bg-gradient-to-r from-transparent via-white/70 to-transparent" />
+    </div>
+  )
 }
 
 export default function InstagramFeed() {

@@ -4,7 +4,7 @@ import { motion } from 'framer-motion'
 
 export default function PageHero({ image, kicker, title, intro, crumb }) {
   return (
-    <section className="relative flex min-h-[60vh] items-end overflow-hidden pt-24">
+    <section className="relative flex min-h-[60vh] items-end overflow-hidden bg-ink pt-24">
       <motion.img
         src={image}
         alt=""

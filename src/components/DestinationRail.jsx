@@ -2,6 +2,7 @@ import { useRef } from 'react'
 import { Star, ArrowLeft, ArrowRight, MapPin } from 'lucide-react'
 import { motion } from 'framer-motion'
 import { destinations, contact } from '../data/site'
+import SmartImage from './SmartImage'
 
 function Card({ d, index }) {
   const msg = encodeURIComponent(`¡Hola Alkoste! Me interesa viajar a ${d.city}, ${d.country}. ¿Me dais información?`)
@@ -16,11 +17,10 @@ function Card({ d, index }) {
       transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1], delay: (index % 4) * 0.06 }}
       className="group relative block h-[26rem] w-[19rem] shrink-0 snap-start overflow-hidden rounded-3xl shadow-soft transition-all duration-300 hover:shadow-lift sm:w-[21rem] sm:hover:-translate-y-1.5"
     >
-      <img
+      <SmartImage
         src={d.image}
         alt={`${d.city}, ${d.country}`}
-        loading="lazy"
-        className="absolute inset-0 h-full w-full object-cover transition-transform duration-[1.2s] ease-out group-hover:scale-110"
+        className="transition-transform duration-[1.2s] ease-out group-hover:scale-110"
       />
       <div className="absolute inset-0 bg-gradient-to-t from-ink/85 via-ink/15 to-transparent" />
 
