@@ -61,7 +61,8 @@ export default function DestinationRail() {
 
   return (
     <div className="relative">
-      <div className="mb-6 flex items-center justify-end gap-2">
+      {/* Flechas solo en escritorio; en móvil se desliza con el dedo */}
+      <div className="mb-6 hidden items-center justify-end gap-2 sm:flex">
         <button onClick={() => scrollBy(-1)} aria-label="Anterior" className="grid h-11 w-11 place-items-center rounded-full border border-line bg-white text-ink transition-colors hover:border-cyan-400 hover:text-cyan-600">
           <ArrowLeft className="h-4 w-4" />
         </button>
@@ -69,7 +70,10 @@ export default function DestinationRail() {
           <ArrowRight className="h-4 w-4" />
         </button>
       </div>
-      <div ref={scroller} className="no-scrollbar -mx-5 flex snap-x snap-mandatory gap-5 overflow-x-auto px-5 pb-2 sm:mx-0 sm:px-0">
+      {/* touch-pan-x: el carrusel solo pana en horizontal (evita el scroll vertical
+          que deformaba la parte superior de las tarjetas al tocarlas en móvil).
+          py-3 da aire al elevado del hover sin recortarlo. */}
+      <div ref={scroller} className="no-scrollbar -mx-5 flex touch-pan-x snap-x snap-mandatory gap-5 overflow-x-auto overscroll-x-contain px-5 py-3 sm:mx-0 sm:px-0">
         {destinations.map((d, i) => (
           <Card key={d.id} d={d} index={i} />
         ))}
