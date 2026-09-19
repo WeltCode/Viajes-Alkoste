@@ -6,6 +6,11 @@
 
 [build.environment]
   NODE_VERSION = "20"
+  # Todas las VITE_* son configuración PÚBLICA de cliente: Vite las incrusta en el
+  # bundle por diseño (este proyecto no tiene secretos de servidor — regla "sin
+  # backend"). Evita que el escáner de secretos de Netlify falle el build al
+  # encontrarlas en el código o en la salida compilada.
+  SECRETS_SCAN_OMIT_KEYS = "VITE_FLIGHT_BRIDGE_URL,VITE_WEB3FORMS_KEY,VITE_INSTAGRAM_ENDPOINT,VITE_INSTAGRAM_PROFILE,VITE_GOOGLE_REVIEWS_ENDPOINT,VITE_GOOGLE_PLACE_ID,VITE_GOOGLE_REVIEWS_URL,VITE_SITE_URL"
 
 # --- BETA (dominio de pruebas alkostetest.netlify.app) ---------------------
 # Evita que Google indexe el sitio de pruebas (para no competir/duplicar con el
