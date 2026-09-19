@@ -1,8 +1,9 @@
 import { useEffect, useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { AnimatePresence, motion } from 'framer-motion'
-import { MapPin, CalendarDays, Users, ArrowLeftRight, Plane, Minus, Plus, AlertCircle } from 'lucide-react'
+import { MapPin, Users, ArrowLeftRight, Plane, Minus, Plus, AlertCircle } from 'lucide-react'
 import FlightButton from './FlightButton'
+import DateRangePicker from './DateRangePicker'
 import {
   preloadAirports,
   searchAirports,
@@ -270,21 +271,16 @@ export default function SearchWidget() {
           </div>
         </div>
 
-        <motion.div variants={item}>
-          <FieldShell icon={CalendarDays} label="Salida">
-            <input type="date" className={inputCls} value={form.departureDate} onChange={(e) => setField('departureDate', e.target.value)} />
-          </FieldShell>
+        <motion.div variants={item} className="sm:col-span-2">
+          <DateRangePicker
+            single={!roundTrip}
+            startLabel="Salida"
+            endLabel="Regreso"
+            startDate={form.departureDate}
+            endDate={form.returnDate}
+            onChange={({ start, end }) => { setError(''); setForm((f) => ({ ...f, departureDate: start, returnDate: end })) }}
+          />
         </motion.div>
-
-        <AnimatePresence initial={false} mode="popLayout">
-          {roundTrip && (
-            <motion.div key="regreso" layout initial={{ opacity: 0, scale: 0.94, filter: 'blur(4px)' }} animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }} exit={{ opacity: 0, scale: 0.94, filter: 'blur(4px)' }} transition={{ duration: 0.35, ease }}>
-              <FieldShell icon={CalendarDays} label="Regreso">
-                <input type="date" className={inputCls} value={form.returnDate} onChange={(e) => setField('returnDate', e.target.value)} />
-              </FieldShell>
-            </motion.div>
-          )}
-        </AnimatePresence>
 
         {/* Viajeros (popover) */}
         <motion.div variants={item} className="relative z-10">
@@ -314,7 +310,7 @@ export default function SearchWidget() {
           </AnimatePresence>
         </motion.div>
 
-        <motion.div variants={item} layout="position" className={`flex ${roundTrip ? '' : 'sm:col-span-2'}`}>
+        <motion.div variants={item} layout="position" className="flex">
           <FlightButton takeoffSignal={takeoffSignal} />
         </motion.div>
       </div>

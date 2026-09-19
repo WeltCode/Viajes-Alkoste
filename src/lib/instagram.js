@@ -74,8 +74,11 @@ export async function fetchInstagramPosts(limit = 8) {
   if (!ENDPOINT) {
     return PLACEHOLDER.slice(0, limit).map((p) => ({ ...p, permalink: instagramProfileUrl }))
   }
+  // Timeout para no quedarnos colgados si el proveedor (Behold) tarda o no responde.
+  const controller = new AbortController()
+  const timer = setTimeout(() => controller.abort(), 8000)
   try {
-    const res = await fetch(`${ENDPOINT}?limit=${limit}`)
+    const res = await fetch(`${ENDPOINT}?limit=${limit}`, { signal: controller.signal })
     if (!res.ok) throw new Error(`Instagram endpoint ${res.status}`)
     const json = await res.json()
     // Graph API → { data: [...] } · Behold.so → { posts: [...] } · o un array pelado
@@ -84,6 +87,8 @@ export async function fetchInstagramPosts(limit = 8) {
   } catch (err) {
     console.warn('[instagram] falling back to placeholder feed:', err.message)
     return PLACEHOLDER.slice(0, limit).map((p) => ({ ...p, permalink: instagramProfileUrl }))
+  } finally {
+    clearTimeout(timer)
   }
 }
 

@@ -10,11 +10,11 @@ function Card({ d, index }) {
       href={`${contact.whatsappHref}?text=${msg}`}
       target="_blank"
       rel="noreferrer"
-      initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
+      initial={{ opacity: 0, scale: 0.96 }}
+      whileInView={{ opacity: 1, scale: 1 }}
       viewport={{ once: true, amount: 0.3 }}
       transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1], delay: (index % 4) * 0.06 }}
-      className="group relative block h-[26rem] w-[19rem] shrink-0 snap-start overflow-hidden rounded-3xl shadow-soft transition-all duration-300 hover:-translate-y-1.5 hover:shadow-lift sm:w-[21rem]"
+      className="group relative block h-[26rem] w-[19rem] shrink-0 snap-start overflow-hidden rounded-3xl shadow-soft transition-all duration-300 hover:shadow-lift sm:w-[21rem] sm:hover:-translate-y-1.5"
     >
       <img
         src={d.image}
@@ -70,10 +70,10 @@ export default function DestinationRail() {
           <ArrowRight className="h-4 w-4" />
         </button>
       </div>
-      {/* touch-pan-x: el carrusel solo pana en horizontal (evita el scroll vertical
-          que deformaba la parte superior de las tarjetas al tocarlas en móvil).
-          py-3 da aire al elevado del hover sin recortarlo. */}
-      <div ref={scroller} className="no-scrollbar -mx-5 flex touch-pan-x snap-x snap-mandatory gap-5 overflow-x-auto overscroll-x-contain px-5 py-3 sm:mx-0 sm:px-0">
+      {/* overflow-y-hidden: el carrusel no se desplaza en vertical (evita el temblor
+          que deformaba la parte superior de las tarjetas al tocarlas) y deja que el
+          gesto vertical haga scroll de la PÁGINA con normalidad. py-4 da aire al hover. */}
+      <div ref={scroller} className="no-scrollbar -mx-5 flex snap-x snap-mandatory gap-5 overflow-x-auto overflow-y-hidden overscroll-x-contain px-5 py-4 sm:mx-0 sm:px-0">
         {destinations.map((d, i) => (
           <Card key={d.id} d={d} index={i} />
         ))}

@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
-import { MapPin, CalendarDays, BedDouble, Minus, Plus, AlertCircle, Search, Loader2, Building2 } from 'lucide-react'
+import { MapPin, BedDouble, Minus, Plus, AlertCircle, Search, Loader2, Building2 } from 'lucide-react'
 import { searchHotelDestinations, buildHotelResultsUrl } from '../lib/hotelBridge'
+import DateRangePicker from './DateRangePicker'
 
 const ease = [0.16, 1, 0.3, 1]
 const container = { hidden: {}, show: { transition: { staggerChildren: 0.06, delayChildren: 0.1 } } }
@@ -195,18 +196,14 @@ export default function HotelSearchWidget({ onSearch }) {
           </AnimatePresence>
         </motion.div>
 
-        <motion.div variants={item}>
-          <FieldShell icon={CalendarDays} label="Entrada">
-            <input type="date" className={inputCls} value={dates.checkin}
-              onChange={(e) => { setDates((d) => ({ ...d, checkin: e.target.value })); setError('') }} />
-          </FieldShell>
-        </motion.div>
-
-        <motion.div variants={item}>
-          <FieldShell icon={CalendarDays} label="Salida">
-            <input type="date" className={inputCls} value={dates.checkout} min={dates.checkin || undefined}
-              onChange={(e) => { setDates((d) => ({ ...d, checkout: e.target.value })); setError('') }} />
-          </FieldShell>
+        <motion.div variants={item} className="sm:col-span-2">
+          <DateRangePicker
+            startLabel="Entrada"
+            endLabel="Salida"
+            startDate={dates.checkin}
+            endDate={dates.checkout}
+            onChange={({ start, end }) => { setDates({ checkin: start, checkout: end }); setError('') }}
+          />
         </motion.div>
 
         {/* Habitaciones y huéspedes */}
