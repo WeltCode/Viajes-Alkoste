@@ -1,0 +1,26 @@
+# Configuración de despliegue en Netlify — Viajes Alkoste
+
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "20"
+
+# --- BETA (dominio de pruebas alkostetest.netlify.app) ---------------------
+# Evita que Google indexe el sitio de pruebas (para no competir/duplicar con el
+# dominio final). QUITAR este bloque de cabeceras al desplegar en el dominio real.
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow"
+
+# --- Fallback SPA ----------------------------------------------------------
+# Cada página ya se pre-renderiza a su propio HTML (SSG) y Netlify la sirve por
+# su ruta. Esta regla (sin forzar, así los archivos reales tienen prioridad)
+# solo captura las rutas que NO tienen HTML propio —p. ej. /buscar/:token y las
+# rutas desconocidas— y deja que React las resuelva en cliente.
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200

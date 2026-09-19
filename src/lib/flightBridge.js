@@ -11,7 +11,9 @@
 // mostrará su formulario en vez de los resultados. Configurable por si cambia.
 export const FLIGHT_BRIDGE_URL =
   import.meta.env.VITE_FLIGHT_BRIDGE_URL ||
-  'http://vuelos.viajesalkoste.com/wtc/ak/vuelos/QueryBridge.aspx'
+  // HTTPS obligatorio: en producción (https) un endpoint http se bloquea por
+  // contenido mixto al cargarlo en el iframe. El motor responde por https.
+  'https://vuelos.viajesalkoste.com/wtc/ak/vuelos/QueryBridge.aspx'
 
 const normalizeText = (value) =>
   String(value || '')
