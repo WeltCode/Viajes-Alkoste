@@ -1,4 +1,5 @@
-import { Check, Plane, Luggage, CreditCard, Stamp, ArrowRight } from 'lucide-react'
+import { Check, Plane, Luggage, CreditCard, Stamp } from 'lucide-react'
+import { ArrowGo } from '../components/icons/CtaIcons'
 import PageHero from '../components/PageHero'
 import SectionHeading from '../components/SectionHeading'
 import SearchWidget from '../components/SearchWidget'
@@ -47,7 +48,7 @@ export default function Vuelos() {
                 </Reveal>
               ))}
             </ul>
-            <a href={contact.whatsappHref} target="_blank" rel="noreferrer" className="btn-primary mt-8">Pide tu presupuesto <ArrowRight className="h-4 w-4" /></a>
+            <a href={contact.whatsappHref} target="_blank" rel="noreferrer" className="btn-primary mt-8">Pide tu presupuesto <ArrowGo className="h-4 w-4" /></a>
           </div>
 
           <div className="grid gap-4 sm:grid-cols-2">

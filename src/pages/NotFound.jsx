@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
-import { Compass, ArrowLeft } from 'lucide-react'
+import { Compass } from 'lucide-react'
+import { ArrowBack } from '../components/icons/CtaIcons'
 import Seo from '../components/Seo'
 
 export default function NotFound() {
@@ -15,7 +16,7 @@ export default function NotFound() {
         <p className="mx-auto mt-3 max-w-md text-ink-700">
           La página que buscas se ha ido de viaje. Volvamos a tierra firme y planifiquemos tu próxima aventura.
         </p>
-        <Link to="/" className="btn-primary mt-8"><ArrowLeft className="h-4 w-4" /> Volver al inicio</Link>
+        <Link to="/" className="btn-primary mt-8"><ArrowBack className="h-4 w-4" /> Volver al inicio</Link>
       </div>
     </section>
     </>

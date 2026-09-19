@@ -1,6 +1,7 @@
 import { useRef } from 'react'
-import { Star, ArrowLeft, ArrowRight, MapPin } from 'lucide-react'
+import { Star, MapPin } from 'lucide-react'
 import { motion } from 'framer-motion'
+import { ArrowGo, ArrowBack } from './icons/CtaIcons'
 import { destinations, contact } from '../data/site'
 import SmartImage from './SmartImage'
 
@@ -47,7 +48,7 @@ function Card({ d, index }) {
           </p> */}
           <span className="text-sm font-semibold text-white/85">Descúbrelo</span>
           <span className="flex h-10 w-10 translate-y-1 items-center justify-center rounded-full bg-white/15 text-white opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:bg-cyan-500 group-hover:opacity-100">
-            <ArrowRight className="h-4 w-4" />
+            <ArrowGo className="h-4 w-4" />
           </span>
         </div>
       </div>
@@ -64,10 +65,10 @@ export default function DestinationRail() {
       {/* Flechas solo en escritorio; en móvil se desliza con el dedo */}
       <div className="mb-6 hidden items-center justify-end gap-2 sm:flex">
         <button onClick={() => scrollBy(-1)} aria-label="Anterior" className="grid h-11 w-11 place-items-center rounded-full border border-line bg-white text-ink transition-colors hover:border-cyan-400 hover:text-cyan-600">
-          <ArrowLeft className="h-4 w-4" />
+          <ArrowBack className="h-4 w-4" />
         </button>
         <button onClick={() => scrollBy(1)} aria-label="Siguiente" className="grid h-11 w-11 place-items-center rounded-full border border-line bg-white text-ink transition-colors hover:border-cyan-400 hover:text-cyan-600">
-          <ArrowRight className="h-4 w-4" />
+          <ArrowGo className="h-4 w-4" />
         </button>
       </div>
       {/* overflow-y-hidden: el carrusel no se desplaza en vertical (evita el temblor

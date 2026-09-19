@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { Plane } from 'lucide-react'
+import { PlaneJet } from './icons/CtaIcons'
 
 // Immersive submit button. Hover reveals the plane (pure CSS group-hover); the
 // parent bumps `takeoffSignal` on submit, which adds `.is-flying` for ~1s and
@@ -45,7 +45,7 @@ export default function FlightButton({ takeoffSignal = 0 }) {
             className="alk-contrail absolute right-full top-1/2 mr-1.5 h-[3px] w-0 -translate-y-1/2 rounded-full transition-[width,opacity] duration-500 group-hover:w-4 group-hover:opacity-60"
             style={{ background: 'linear-gradient(to left, rgba(255,255,255,0.95), rgba(255,255,255,0.4), transparent)' }}
           />
-          <Plane className="h-5 w-5 rotate-45 text-white drop-shadow-[0_2px_7px_rgba(0,0,0,0.4)]" />
+          <PlaneJet className="h-5 w-5 rotate-45 text-white drop-shadow-[0_2px_7px_rgba(0,0,0,0.4)]" />
         </span>
       </span>
     </button>

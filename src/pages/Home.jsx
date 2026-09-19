@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { ArrowRight, ShieldCheck, Headphones, CalendarClock, Lock, Star, ArrowUpRight, ChevronDown } from 'lucide-react'
+import { ShieldCheck, Headphones, CalendarClock, Lock, Star, ChevronDown } from 'lucide-react'
+import { ArrowGo, ArrowUp } from '../components/icons/CtaIcons'
 import HeroSearch from '../components/HeroSearch'
 import SectionHeading from '../components/SectionHeading'
 import ServicesShowcase from '../components/ServicesShowcase'
@@ -78,7 +79,7 @@ export default function Home() {
               </motion.p>
 
               <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.7 }} className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
-                <Link to="/vuelos" className="btn-primary">Explora destinos <ArrowRight className="h-4 w-4" /></Link>
+                <Link to="/vuelos" className="btn-primary">Explora destinos <ArrowGo className="h-4 w-4" /></Link>
                 <a href={contact.whatsappHref} target="_blank" rel="noreferrer" className="btn inline-flex border border-white/40 text-white hover:bg-white/10">Habla con un agente</a>
               </motion.div>
 
@@ -136,7 +137,7 @@ export default function Home() {
         <div className="container-x relative">
           <div className="flex flex-wrap items-end justify-between gap-6">
             <SectionHeading kicker="Destinos que enamoran" title="Tu próxima aventura empieza aquí" intro="Los destinos favoritos de nuestros viajeros a Latinoamérica y más allá." />
-            <Link to="/vuelos" className="hidden items-center gap-1 text-sm font-bold text-cyan-600 hover:text-cyan-700 sm:inline-flex">Ver todos los destinos <ArrowUpRight className="h-4 w-4" /></Link>
+            <Link to="/vuelos" className="hidden items-center gap-1 text-sm font-bold text-cyan-600 hover:text-cyan-700 sm:inline-flex">Ver todos los destinos <ArrowUp className="h-4 w-4" /></Link>
           </div>
           <div className="mt-12"><DestinationRail /></div>
         </div>

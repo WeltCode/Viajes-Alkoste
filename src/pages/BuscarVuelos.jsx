@@ -1,7 +1,8 @@
 import { useEffect, useMemo, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { AnimatePresence, motion } from 'framer-motion'
-import { ChevronRight, ExternalLink, Plane, ArrowLeft } from 'lucide-react'
+import { ChevronRight, Plane } from 'lucide-react'
+import { ArrowBack, ExternalGo } from '../components/icons/CtaIcons'
 import { decodeFlightSearchPayload, submitFlightBridge } from '../lib/flightBridge'
 import FlightSearchLoader from '../components/FlightSearchLoader'
 import Seo from '../components/Seo'
@@ -56,7 +57,7 @@ export default function BuscarVuelos() {
             </span>
             <h1 className="mt-4 font-display text-2xl font-bold text-ink">Búsqueda no válida</h1>
             <p className="mt-2 text-sm text-ink-700">Este enlace no contiene una búsqueda válida o fue modificado.</p>
-            <Link to="/" className="btn-primary mt-6"><ArrowLeft className="h-4 w-4" /> Volver al inicio</Link>
+            <Link to="/" className="btn-primary mt-6"><ArrowBack className="h-4 w-4" /> Volver al inicio</Link>
           </div>
         </div>
       </section>
@@ -84,9 +85,9 @@ export default function BuscarVuelos() {
               <p className="mt-2 text-sm font-medium text-ink-600">{subtitle}</p>
             </div>
             <div className="flex flex-wrap gap-2.5">
-              <Link to="/vuelos" className="btn-ghost"><ArrowLeft className="h-4 w-4" /> Nueva búsqueda</Link>
+              <Link to="/vuelos" className="btn-ghost"><ArrowBack className="h-4 w-4" /> Nueva búsqueda</Link>
               <button type="button" onClick={() => submitFlightBridge(payload, { target: '_blank' })} className="btn-primary">
-                Abrir en pestaña nueva <ExternalLink className="h-4 w-4" />
+                Abrir en pestaña nueva <ExternalGo className="h-4 w-4" />
               </button>
             </div>
           </div>

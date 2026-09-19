@@ -1,5 +1,6 @@
 import { useState } from 'react'
-import { Send, Check, Loader2 } from 'lucide-react'
+import { Check, Loader2 } from 'lucide-react'
+import { SendPlane } from './icons/CtaIcons'
 import { contact } from '../data/site'
 
 const topics = ['Solicitar cotización', 'Consulta sobre paquetes', 'Requisitos de viaje', 'Promociones actuales']
@@ -138,7 +139,7 @@ export default function LeadForm({ compact = false }) {
         {status === 'sending' ? (
           <><Loader2 className="h-4 w-4 animate-spin" /> Enviando…</>
         ) : (
-          <><Send className="h-4 w-4" /> Enviar consulta</>
+          <><SendPlane className="h-4 w-4" /> Enviar consulta</>
         )}
       </button>
       <p className="text-center text-xs text-ink-500">

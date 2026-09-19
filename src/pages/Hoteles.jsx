@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Coffee, Utensils, Sparkles, Waves, Star, ArrowRight, ExternalLink, X, BedDouble, ShieldCheck, Tag, Headphones, RadioTower } from 'lucide-react'
+import { Coffee, Utensils, Sparkles, Waves, Star, BedDouble, ShieldCheck, Tag, Headphones, RadioTower } from 'lucide-react'
+import { ArrowGo, ExternalGo, CloseX } from '../components/icons/CtaIcons'
 import SectionHeading from '../components/SectionHeading'
 import CTABand from '../components/CTABand'
 import Reveal from '../components/Reveal'
@@ -59,7 +60,7 @@ function FeaturedCard({ h, i, onOpen }) {
           <h3 className="mt-1 font-display text-lg font-bold leading-snug text-ink">{h.hotel}</h3>
           <div className="mt-4 flex items-end justify-between border-t border-line pt-3">
             <p className="text-sm text-ink-500">desde <span className="text-lg font-extrabold text-ink">{h.price}€</span> <span className="text-xs">/ noche</span></p>
-            <span className="flex items-center gap-1 text-sm font-bold text-cyan-600">Ver <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" /></span>
+            <span className="flex items-center gap-1 text-sm font-bold text-cyan-600">Ver <ArrowGo className="h-4 w-4 transition-transform group-hover:translate-x-1" /></span>
           </div>
         </div>
       </button>
@@ -157,10 +158,10 @@ export default function Hoteles() {
                 </div>
                 <div className="flex flex-wrap gap-2.5">
                   <a href={resultsUrl} target="_blank" rel="noreferrer" className="btn-ghost">
-                    Abrir en pestaña nueva <ExternalLink className="h-4 w-4" />
+                    Abrir en pestaña nueva <ExternalGo className="h-4 w-4" />
                   </a>
                   <button type="button" onClick={() => setResultsUrl('')} className="btn-ghost">
-                    <X className="h-4 w-4" /> Cerrar
+                    <CloseX className="h-4 w-4" /> Cerrar
                   </button>
                 </div>
               </motion.div>

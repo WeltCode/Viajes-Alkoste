@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
-import { Instagram, Heart, MessageCircle, ArrowUpRight, Play, Layers } from 'lucide-react'
+import { Instagram, Heart, MessageCircle, Play, Layers } from 'lucide-react'
+import { ArrowUp } from './icons/CtaIcons'
 import SectionHeading from './SectionHeading'
 import SmartImage from './SmartImage'
 import { fetchInstagramPosts, instagramProfileUrl } from '../lib/instagram'
@@ -117,7 +118,7 @@ export default function InstagramFeed() {
 
         <div className="mt-10 flex justify-center">
           <a href={instagramProfileUrl} target="_blank" rel="noreferrer" className="btn-primary">
-            Ver más en Instagram <ArrowUpRight className="h-4 w-4" />
+            Ver más en Instagram <ArrowUp className="h-4 w-4" />
           </a>
         </div>
       </div>

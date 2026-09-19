@@ -1,4 +1,4 @@
-import { Phone } from 'lucide-react'
+import { PhoneRing } from './icons/CtaIcons'
 import WhatsAppIcon from './WhatsAppIcon'
 import Reveal from './Reveal'
 import SmartImage from './SmartImage'
@@ -30,7 +30,7 @@ export default function CTABand({
               <WhatsAppIcon className="h-4 w-4 text-cyan-500" /> Escríbenos por WhatsApp
             </a>
             <a href={contact.phoneHref} className="btn inline-flex border border-white/40 text-white hover:bg-white/10">
-              <Phone className="h-4 w-4" /> {contact.phone}
+              <PhoneRing className="h-4 w-4" /> {contact.phone}
             </a>
           </Reveal>
         </div>

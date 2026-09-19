@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { ArrowUpRight } from 'lucide-react'
+import { ArrowUp } from './icons/CtaIcons'
 import SectionHeading from './SectionHeading'
 import SmartImage from './SmartImage'
 import { contact } from '../data/site'
@@ -84,7 +84,7 @@ function Tile({ t, index }) {
         <p className="mt-1.5 max-w-xs text-sm leading-relaxed text-white/80">{t.line}</p>
         <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-bold text-white">
           <span className="border-b-2 border-cyan-400/0 transition-colors group-hover:border-cyan-400">Planéalo con nosotros</span>
-          <ArrowUpRight className="h-4 w-4 text-cyan-300 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+          <ArrowUp className="h-4 w-4 text-cyan-300 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
         </span>
       </div>
     </motion.a>

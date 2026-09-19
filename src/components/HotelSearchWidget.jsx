@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
-import { MapPin, BedDouble, Minus, Plus, AlertCircle, Search, Loader2, Building2 } from 'lucide-react'
+import { MapPin, BedDouble, Minus, Plus, AlertCircle, Loader2, Building2 } from 'lucide-react'
+import { SearchGo } from './icons/CtaIcons'
 import { searchHotelDestinations, buildHotelResultsUrl } from '../lib/hotelBridge'
 import DateRangePicker from './DateRangePicker'
 
@@ -260,7 +261,7 @@ export default function HotelSearchWidget({ onSearch, showTitle = true }) {
 
         <motion.div variants={item} className="sm:col-span-2">
           <button type="submit" className="btn-primary w-full justify-center py-3.5 text-base">
-            <Search className="h-5 w-5" /> Buscar hoteles
+            <SearchGo className="h-5 w-5" /> Buscar hoteles
           </button>
         </motion.div>
       </div>
