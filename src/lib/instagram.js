@@ -85,8 +85,11 @@ export async function fetchInstagramPosts(limit = 8) {
     const data = Array.isArray(json) ? json : json.data || json.posts || []
     return data.slice(0, limit).map(normalize)
   } catch (err) {
-    console.warn('[instagram] falling back to placeholder feed:', err.message)
-    return PLACEHOLDER.slice(0, limit).map((p) => ({ ...p, permalink: instagramProfileUrl }))
+    // El feed real está configurado pero no responde (p. ej. Behold caído):
+    // devolvemos null para que la sección mantenga el "skeleton" de carga en vez
+    // de mostrar contenido de ejemplo. Cuando el proveedor vuelva, cargarán solos.
+    console.warn('[instagram] endpoint no disponible, se mantiene el skeleton:', err.message)
+    return null
   } finally {
     clearTimeout(timer)
   }

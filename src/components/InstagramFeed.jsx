@@ -74,7 +74,11 @@ export default function InstagramFeed() {
 
   useEffect(() => {
     let alive = true
-    fetchInstagramPosts(6).then((data) => alive && setPosts(data))
+    // Si el feed no carga (data = null), no tocamos el estado: se mantiene el
+    // skeleton de carga en vez de dejar la sección vacía.
+    fetchInstagramPosts(6).then((data) => {
+      if (alive && data) setPosts(data)
+    })
     return () => {
       alive = false
     }
