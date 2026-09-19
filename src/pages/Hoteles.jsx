@@ -1,4 +1,5 @@
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
+import { useLocation } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Coffee, Utensils, Sparkles, Waves, Star, ArrowRight, ExternalLink, X, BedDouble, ShieldCheck, Tag, Headphones, RadioTower } from 'lucide-react'
 import SectionHeading from '../components/SectionHeading'
@@ -82,6 +83,18 @@ export default function Hoteles() {
     // deja pintar el panel y baja hasta él
     window.setTimeout(() => resultsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 80)
   }
+
+  // Si se llega desde el buscador del hero (Home → "Hoteles"), abre los resultados.
+  const location = useLocation()
+  useEffect(() => {
+    const url = location.state?.hotelResultsUrl
+    if (url) {
+      openResults(url, location.state?.hotelResultsTitle || '')
+      // limpia el estado para que no se reabra al volver o refrescar
+      window.history.replaceState({}, document.title)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [location.state])
 
   return (
     <>

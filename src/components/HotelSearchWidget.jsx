@@ -47,7 +47,7 @@ function Stepper({ label, hint, value, min, max, onChange }) {
 
 const emptyRoom = () => ({ adults: 2, children: [] })
 
-export default function HotelSearchWidget({ onSearch }) {
+export default function HotelSearchWidget({ onSearch, showTitle = true }) {
   const [query, setQuery] = useState('')
   const [selected, setSelected] = useState(null)
   const [suggestions, setSuggestions] = useState([])
@@ -132,12 +132,14 @@ export default function HotelSearchWidget({ onSearch }) {
           animate={{ scale: [1, 1.25, 1], opacity: [0.5, 0.8, 0.5] }} transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }} />
       </span>
 
-      <div className="relative mb-4 flex items-center gap-2.5 text-sm font-bold text-ink">
-        <span className="grid h-9 w-9 place-items-center rounded-full bg-cyan-500 text-white shadow-glow">
-          <BedDouble className="h-4 w-4" />
-        </span>
-        Buscar hoteles
-      </div>
+      {showTitle && (
+        <div className="relative mb-4 flex items-center gap-2.5 text-sm font-bold text-ink">
+          <span className="grid h-9 w-9 place-items-center rounded-full bg-cyan-500 text-white shadow-glow">
+            <BedDouble className="h-4 w-4" />
+          </span>
+          Buscar hoteles
+        </div>
+      )}
 
       <AnimatePresence>
         {error && (

@@ -102,7 +102,7 @@ function Stepper({ label, hint, value, min, max, onChange }) {
   )
 }
 
-export default function SearchWidget() {
+export default function SearchWidget({ showTitle = true }) {
   const navigate = useNavigate()
   const [tripType, setTripType] = useState('round-trip')
   const [error, setError] = useState('')
@@ -196,15 +196,17 @@ export default function SearchWidget() {
         />
       </span>
 
-      <div className="relative mb-4 flex flex-wrap items-center justify-between gap-3">
-        <span className="flex items-center gap-2.5 text-sm font-bold text-ink">
-          <span className="relative grid h-9 w-9 place-items-center overflow-hidden rounded-full bg-cyan-500 text-white shadow-glow">
-            <motion.span animate={{ y: [1, -2, 1], rotate: [0, 3, 0] }} transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}>
-              <Plane className="h-4 w-4 -rotate-45" />
-            </motion.span>
+      <div className={`relative mb-4 flex flex-wrap items-center gap-3 ${showTitle ? 'justify-between' : 'justify-center'}`}>
+        {showTitle && (
+          <span className="flex items-center gap-2.5 text-sm font-bold text-ink">
+            <span className="relative grid h-9 w-9 place-items-center overflow-hidden rounded-full bg-cyan-500 text-white shadow-glow">
+              <motion.span animate={{ y: [1, -2, 1], rotate: [0, 3, 0] }} transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}>
+                <Plane className="h-4 w-4 -rotate-45" />
+              </motion.span>
+            </span>
+            Buscar vuelos
           </span>
-          Buscar vuelos
-        </span>
+        )}
 
         <div className="relative inline-flex rounded-full border border-line bg-mist p-1 text-xs font-bold">
           {[

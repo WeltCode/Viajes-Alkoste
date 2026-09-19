@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { ArrowRight, ShieldCheck, Headphones, CalendarClock, Lock, Star, ArrowUpRight, ChevronDown } from 'lucide-react'
-import SearchWidget from '../components/SearchWidget'
+import HeroSearch from '../components/HeroSearch'
 import SectionHeading from '../components/SectionHeading'
 import ServicesShowcase from '../components/ServicesShowcase'
 import DestinationRail from '../components/DestinationRail'
@@ -100,7 +100,7 @@ export default function Home() {
 
             <motion.div initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.9, delay: 0.5, ease }} className="lg:justify-self-end lg:pl-6">
               <p className="mb-3 hidden font-display text-lg font-bold text-white lg:block">¿A dónde vas?<span className="text-cyan-300">.</span></p>
-              <SearchWidget />
+              <HeroSearch />
             </motion.div>
           </div>
         </div>
