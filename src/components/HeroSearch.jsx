@@ -4,16 +4,17 @@ import { motion } from 'framer-motion'
 import { Plane, BedDouble } from 'lucide-react'
 import SearchWidget from './SearchWidget'
 import HotelSearchWidget from './HotelSearchWidget'
-
-const TABS = [
-  { id: 'vuelos', label: 'Vuelos', Icon: Plane },
-  { id: 'hoteles', label: 'Hoteles', Icon: BedDouble },
-]
+import { useI18n } from '../i18n/LanguageProvider'
 
 // Buscador del hero con conmutador Vuelos / Hoteles.
 // - Vuelos: navega a /buscar/:token (motor de vuelos).
 // - Hoteles: navega a /hoteles y abre allí los resultados del motor de Veturis.
 export default function HeroSearch() {
+  const { t } = useI18n()
+  const TABS = [
+    { id: 'vuelos', label: t('nav.vuelos'), Icon: Plane },
+    { id: 'hoteles', label: t('nav.hoteles'), Icon: BedDouble },
+  ]
   const [tab, setTab] = useState('vuelos')
   const navigate = useNavigate()
 

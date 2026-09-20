@@ -1,14 +1,7 @@
 import { useEffect, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { Plane } from 'lucide-react'
-
-const MESSAGES = [
-  'Despegando…',
-  'Buscando las mejores tarifas…',
-  'Comparando aerolíneas…',
-  'Revisando equipaje y horarios…',
-  'Preparando tu itinerario…',
-]
+import { useI18n } from '../i18n/LanguageProvider'
 
 const PLANE = 'M11 0 L-7 -6 L-2.5 -1.6 L-10 -1.6 L-10 1.6 L-2.5 1.6 L-7 6 Z'
 
@@ -34,11 +27,13 @@ function Cloud({ className, delay = 0, duration = 22, from = '-20%', to = '120%'
 }
 
 export default function FlightSearchLoader({ from = 'Origen', to = 'Destino' }) {
+  const { t } = useI18n()
+  const messages = t('flightLoader')
   const [msg, setMsg] = useState(0)
   useEffect(() => {
-    const id = setInterval(() => setMsg((m) => (m + 1) % MESSAGES.length), 1500)
+    const id = setInterval(() => setMsg((m) => (m + 1) % messages.length), 1500)
     return () => clearInterval(id)
-  }, [])
+  }, [messages.length])
 
   return (
     <div className="relative flex min-h-[560px] flex-col items-center justify-center overflow-hidden bg-gradient-to-b from-cyan-50 via-white to-white px-6 py-16">
@@ -126,7 +121,7 @@ export default function FlightSearchLoader({ from = 'Origen', to = 'Destino' }) 
               transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
               className="font-display text-lg font-bold text-ink"
             >
-              {MESSAGES[msg]}
+              {messages[msg]}
             </motion.p>
           </AnimatePresence>
         </div>

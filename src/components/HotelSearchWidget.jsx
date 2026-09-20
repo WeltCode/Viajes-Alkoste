@@ -4,6 +4,7 @@ import { MapPin, BedDouble, Minus, Plus, AlertCircle, Loader2, Building2 } from 
 import { SearchGo } from './icons/CtaIcons'
 import { searchHotelDestinations, buildHotelResultsUrl } from '../lib/hotelBridge'
 import DateRangePicker from './DateRangePicker'
+import { useI18n } from '../i18n/LanguageProvider'
 
 const ease = [0.16, 1, 0.3, 1]
 const container = { hidden: {}, show: { transition: { staggerChildren: 0.06, delayChildren: 0.1 } } }
@@ -49,6 +50,7 @@ function Stepper({ label, hint, value, min, max, onChange }) {
 const emptyRoom = () => ({ adults: 2, children: [] })
 
 export default function HotelSearchWidget({ onSearch, showTitle = true }) {
+  const { t } = useI18n()
   const [query, setQuery] = useState('')
   const [selected, setSelected] = useState(null)
   const [suggestions, setSuggestions] = useState([])
@@ -82,7 +84,7 @@ export default function HotelSearchWidget({ onSearch, showTitle = true }) {
 
   const totalAdults = rooms.reduce((n, r) => n + r.adults, 0)
   const totalChildren = rooms.reduce((n, r) => n + r.children.length, 0)
-  const roomsSummary = `${totalAdults} adulto${totalAdults !== 1 ? 's' : ''}${totalChildren ? ` · ${totalChildren} niño${totalChildren !== 1 ? 's' : ''}` : ''} · ${rooms.length} hab.`
+  const roomsSummary = t('hotelSearch.resumen')(totalAdults, totalChildren, rooms.length)
 
   const setRoom = (i, updater) => setRooms((rs) => rs.map((r, idx) => (idx === i ? updater(r) : r)))
   const setChildrenCount = (i, count) =>
@@ -104,10 +106,10 @@ export default function HotelSearchWidget({ onSearch, showTitle = true }) {
 
   const submit = (e) => {
     e.preventDefault()
-    if (!selected) return setError('Elige un destino u hotel de la lista.')
-    if (!dates.checkin) return setError('Selecciona la fecha de entrada.')
-    if (!dates.checkout) return setError('Selecciona la fecha de salida.')
-    if (dates.checkout <= dates.checkin) return setError('La salida debe ser posterior a la entrada.')
+    if (!selected) return setError(t('hotelSearch.errDestino'))
+    if (!dates.checkin) return setError(t('hotelSearch.errEntrada'))
+    if (!dates.checkout) return setError(t('hotelSearch.errSalida'))
+    if (dates.checkout <= dates.checkin) return setError(t('hotelSearch.errOrden'))
 
     const url = buildHotelResultsUrl({
       destino: selected.value,
@@ -138,7 +140,7 @@ export default function HotelSearchWidget({ onSearch, showTitle = true }) {
           <span className="grid h-9 w-9 place-items-center rounded-full bg-cyan-500 text-white shadow-glow">
             <BedDouble className="h-4 w-4" />
           </span>
-          Buscar hoteles
+          {t('hotelSearch.title')}
         </div>
       )}
 
@@ -155,11 +157,11 @@ export default function HotelSearchWidget({ onSearch, showTitle = true }) {
       <div className="relative grid grid-cols-1 gap-3 sm:grid-cols-2">
         {/* Destino / hotel */}
         <motion.div variants={item} className="relative z-30 sm:col-span-2">
-          <FieldShell icon={MapPin} label="Destino u hotel">
+          <FieldShell icon={MapPin} label={t('hotelSearch.destino')}>
             <input
               className={inputCls}
               autoComplete="off"
-              placeholder="Ciudad, zona u hotel (ej. Cancún, Punta Cana…)"
+              placeholder={t('hotelSearch.destinoPlaceholder')}
               value={query}
               onChange={(e) => { setQuery(e.target.value); setSelected(null); setOpenSug(true); setError('') }}
               onFocus={() => setOpenSug(true)}
@@ -174,11 +176,11 @@ export default function HotelSearchWidget({ onSearch, showTitle = true }) {
               >
                 {loadingSug && (
                   <li className="flex items-center gap-2 px-3 py-3 text-sm text-ink-500">
-                    <Loader2 className="h-4 w-4 animate-spin text-cyan-500" /> Buscando destinos…
+                    <Loader2 className="h-4 w-4 animate-spin text-cyan-500" /> {t('hotelSearch.buscando')}
                   </li>
                 )}
                 {!loadingSug && suggestions.length === 0 && (
-                  <li className="px-3 py-3 text-sm text-ink-500">Sin resultados. Prueba con otra ciudad u hotel.</li>
+                  <li className="px-3 py-3 text-sm text-ink-500">{t('hotelSearch.sinResultados')}</li>
                 )}
                 {suggestions.map((s) => (
                   <li key={s.id}>
@@ -189,7 +191,7 @@ export default function HotelSearchWidget({ onSearch, showTitle = true }) {
                       </span>
                       <span className="min-w-0">
                         <span className="block truncate text-sm font-semibold text-ink">{s.value}</span>
-                        <span className="block truncate text-xs text-ink-500">{s.pais}{s.isHotel ? ' · Hotel' : ''}</span>
+                        <span className="block truncate text-xs text-ink-500">{s.pais}{s.isHotel ? ` · ${t('hotelSearch.hotel')}` : ''}</span>
                       </span>
                     </button>
                   </li>
@@ -201,8 +203,8 @@ export default function HotelSearchWidget({ onSearch, showTitle = true }) {
 
         <motion.div variants={item} className="sm:col-span-2">
           <DateRangePicker
-            startLabel="Entrada"
-            endLabel="Salida"
+            startLabel={t('hotelSearch.entrada')}
+            endLabel={t('hotelSearch.salida')}
             startDate={dates.checkin}
             endDate={dates.checkout}
             onChange={({ start, end }) => { setDates({ checkin: start, checkout: end }); setError('') }}
@@ -212,7 +214,7 @@ export default function HotelSearchWidget({ onSearch, showTitle = true }) {
         {/* Habitaciones y huéspedes */}
         <motion.div variants={item} className="relative z-20">
           <button type="button" onClick={() => setRoomsOpen((v) => !v)} className="w-full text-left">
-            <FieldShell icon={BedDouble} label="Habitaciones y huéspedes">
+            <FieldShell icon={BedDouble} label={t('hotelSearch.habitaciones')}>
               <span className="truncate text-sm font-semibold text-ink">{roomsSummary}</span>
             </FieldShell>
           </button>
@@ -225,18 +227,18 @@ export default function HotelSearchWidget({ onSearch, showTitle = true }) {
                   {rooms.map((room, i) => (
                     <div key={i} className={`${i > 0 ? 'mt-3 border-t border-line pt-3' : ''}`}>
                       <div className="flex items-center justify-between">
-                        <p className="text-xs font-bold uppercase tracking-wide text-cyan-600">Habitación {i + 1}</p>
+                        <p className="text-xs font-bold uppercase tracking-wide text-cyan-600">{t('hotelSearch.habitacion')} {i + 1}</p>
                         {rooms.length > 1 && (
-                          <button type="button" onClick={() => removeRoom(i)} className="text-xs font-semibold text-ink-400 hover:text-red-500">Quitar</button>
+                          <button type="button" onClick={() => removeRoom(i)} className="text-xs font-semibold text-ink-400 hover:text-red-500">{t('hotelSearch.quitar')}</button>
                         )}
                       </div>
-                      <Stepper label="Adultos" value={room.adults} min={1} max={6} onChange={(v) => setRoom(i, (r) => ({ ...r, adults: v }))} />
-                      <Stepper label="Niños" hint="0 a 17 años" value={room.children.length} min={0} max={4} onChange={(v) => setChildrenCount(i, v)} />
+                      <Stepper label={t('hotelSearch.adultos')} value={room.adults} min={1} max={6} onChange={(v) => setRoom(i, (r) => ({ ...r, adults: v }))} />
+                      <Stepper label={t('hotelSearch.ninos')} hint={t('hotelSearch.ninosHint')} value={room.children.length} min={0} max={4} onChange={(v) => setChildrenCount(i, v)} />
                       {room.children.length > 0 && (
                         <div className="mt-1 grid grid-cols-2 gap-2">
                           {room.children.map((age, ci) => (
                             <label key={ci} className="flex items-center gap-1.5 rounded-xl border border-line bg-mist px-2.5 py-1.5 text-xs font-semibold text-ink-600">
-                              Niño {ci + 1}
+                              {t('hotelSearch.nino')} {ci + 1}
                               <select value={age} onChange={(e) => setRoom(i, (r) => { const c = [...r.children]; c[ci] = Number(e.target.value); return { ...r, children: c } })}
                                 className="ml-auto rounded-md bg-white px-1 py-0.5 text-ink outline-none">
                                 {Array.from({ length: 18 }, (_, a) => <option key={a} value={a}>{a}</option>)}
@@ -249,10 +251,10 @@ export default function HotelSearchWidget({ onSearch, showTitle = true }) {
                   ))}
                   {rooms.length < 5 && (
                     <button type="button" onClick={addRoom} className="mt-3 flex w-full items-center justify-center gap-1.5 rounded-xl border border-dashed border-cyan-300 py-2 text-sm font-semibold text-cyan-600 hover:bg-cyan-50">
-                      <Plus className="h-4 w-4" /> Añadir habitación
+                      <Plus className="h-4 w-4" /> {t('hotelSearch.anadirHab')}
                     </button>
                   )}
-                  <button type="button" onClick={() => setRoomsOpen(false)} className="btn-primary mt-3 w-full">Listo</button>
+                  <button type="button" onClick={() => setRoomsOpen(false)} className="btn-primary mt-3 w-full">{t('hotelSearch.listo')}</button>
                 </motion.div>
               </>
             )}
@@ -261,13 +263,13 @@ export default function HotelSearchWidget({ onSearch, showTitle = true }) {
 
         <motion.div variants={item} className="sm:col-span-2">
           <button type="submit" className="btn-primary w-full justify-center py-3.5 text-base">
-            <SearchGo className="h-5 w-5" /> Buscar hoteles
+            <SearchGo className="h-5 w-5" /> {t('hotelSearch.buscarHoteles')}
           </button>
         </motion.div>
       </div>
 
       <p className="relative mt-4 text-xs leading-relaxed text-ink-500">
-        Verás la disponibilidad aquí mismo, con las tarifas en tiempo real de nuestro motor de reservas.
+        {t('hotelSearch.hint')}
       </p>
     </motion.form>
   )

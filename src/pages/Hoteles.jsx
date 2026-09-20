@@ -11,6 +11,7 @@ import HotelSearchWidget from '../components/HotelSearchWidget'
 import HotelSearchLoader from '../components/HotelSearchLoader'
 import SmartImage from '../components/SmartImage'
 import { FEATURED_HOTELS, featuredHotelUrl } from '../lib/hotelBridge'
+import { useI18n } from '../i18n/LanguageProvider'
 
 const MIN_LOADER_MS = 2600 // tiempo mínimo para disfrutar la animación de búsqueda
 
@@ -18,18 +19,8 @@ const IMG = 'https://images.unsplash.com'
 const heroImg = `${IMG}/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=2000&q=85`
 
 // El régimen se elige/filtra dentro del buscador; aquí solo lo explicamos.
-const boards = [
-  { icon: Coffee, title: 'Solo alojamiento', text: 'La base perfecta para explorar a tu aire.' },
-  { icon: Utensils, title: 'Desayuno o media pensión', text: 'Empieza el día con energía, sin preocuparte.' },
-  { icon: Sparkles, title: 'Todo incluido', text: 'Comidas, bebidas y actividades, sin sorpresas.' },
-  { icon: Waves, title: 'Resorts y apartamentos', text: 'Desde escapadas urbanas hasta paraísos de playa.' },
-]
-
-const perks = [
-  { icon: Tag, title: 'Precios en tiempo real', text: 'Tarifas actualizadas al segundo desde nuestro motor de reservas.' },
-  { icon: ShieldCheck, title: 'Reserva con confianza', text: 'Miles de hoteles verificados en todo el mundo.' },
-  { icon: Headphones, title: 'Un agente detrás', text: '¿Dudas con tu reserva? Te ayudamos por WhatsApp al instante.' },
-]
+const boardIcons = [Coffee, Utensils, Sparkles, Waves]
+const perkIcons = [Tag, ShieldCheck, Headphones]
 
 function Stars({ n }) {
   return (
@@ -42,6 +33,7 @@ function Stars({ n }) {
 }
 
 function FeaturedCard({ h, i, onOpen }) {
+  const { t } = useI18n()
   return (
     <Reveal delay={(i % 4) * 0.07}>
       <button type="button" onClick={() => onOpen(h)}
@@ -59,8 +51,8 @@ function FeaturedCard({ h, i, onOpen }) {
           </div>
           <h3 className="mt-1 font-display text-lg font-bold leading-snug text-ink">{h.hotel}</h3>
           <div className="mt-4 flex items-end justify-between border-t border-line pt-3">
-            <p className="text-sm text-ink-500">desde <span className="text-lg font-extrabold text-ink">{h.price}€</span> <span className="text-xs">/ noche</span></p>
-            <span className="flex items-center gap-1 text-sm font-bold text-cyan-600">Ver <ArrowGo className="h-4 w-4 transition-transform group-hover:translate-x-1" /></span>
+            <p className="text-sm text-ink-500">{t('hoteles.desde')} <span className="text-lg font-extrabold text-ink">{h.price}€</span> <span className="text-xs">{t('hoteles.noche')}</span></p>
+            <span className="flex items-center gap-1 text-sm font-bold text-cyan-600">{t('hoteles.ver')} <ArrowGo className="h-4 w-4 transition-transform group-hover:translate-x-1" /></span>
           </div>
         </div>
       </button>
@@ -69,6 +61,9 @@ function FeaturedCard({ h, i, onOpen }) {
 }
 
 export default function Hoteles() {
+  const { t } = useI18n()
+  const boards = t('hoteles.boards')
+  const perks = t('hoteles.perks')
   const [resultsUrl, setResultsUrl] = useState('')
   const [resultsTitle, setResultsTitle] = useState('')
   const [iframeLoaded, setIframeLoaded] = useState(false)
@@ -110,15 +105,15 @@ export default function Hoteles() {
           <div>
             <motion.span initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
               className="inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/10 px-3.5 py-1.5 text-xs font-bold uppercase tracking-[0.14em] text-white backdrop-blur">
-              <BedDouble className="h-3.5 w-3.5" /> Hoteles y alojamientos
+              <BedDouble className="h-3.5 w-3.5" /> {t('hoteles.heroKicker')}
             </motion.span>
             <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 0.05, ease: [0.16, 1, 0.3, 1] }}
               className="display mt-5 max-w-2xl text-4xl leading-[1.05] text-white sm:text-5xl lg:text-6xl">
-              Tu hotel ideal, al <span className="text-cyan-300">mejor precio</span>
+              {t('hoteles.heroTitle1')} <span className="text-cyan-300">{t('hoteles.heroTitle2')}</span>
             </motion.h1>
             <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 0.12, ease: [0.16, 1, 0.3, 1] }}
               className="mt-5 max-w-xl text-base leading-relaxed text-white/85 sm:text-lg">
-              Busca entre miles de hoteles y resorts en todo el mundo con tarifas en tiempo real. Elige tus fechas y reserva en minutos.
+              {t('hoteles.heroIntro')}
             </motion.p>
           </div>
           <HotelSearchWidget onSearch={openResults} />
@@ -147,21 +142,21 @@ export default function Hoteles() {
                       <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-cyan-400 opacity-75" />
                       <span className="relative inline-flex h-2 w-2 rounded-full bg-cyan-500" />
                     </span>
-                    Disponibilidad en directo
+                    {t('hoteles.dispEnDirecto')}
                   </span>
                   <h2 className="mt-2 font-display text-2xl font-bold leading-tight text-ink sm:text-3xl">
-                    {resultsTitle ? <>Hoteles en <span className="text-cyan-600">{resultsTitle}</span></> : 'Resultados de tu búsqueda'}
+                    {resultsTitle ? <>{t('hoteles.hotelesEn')} <span className="text-cyan-600">{resultsTitle}</span></> : t('hoteles.resultados')}
                   </h2>
                   <p className="mt-1 flex items-center gap-1.5 text-sm text-ink-500">
-                    <RadioTower className="h-4 w-4 text-cyan-500" /> Tarifas y disponibilidad en tiempo real de nuestro motor de reservas.
+                    <RadioTower className="h-4 w-4 text-cyan-500" /> {t('hoteles.dispReal')}
                   </p>
                 </div>
                 <div className="flex flex-wrap gap-2.5">
                   <a href={resultsUrl} target="_blank" rel="noreferrer" className="btn-ghost">
-                    Abrir en pestaña nueva <ExternalGo className="h-4 w-4" />
+                    {t('common.abrirPestana')} <ExternalGo className="h-4 w-4" />
                   </a>
                   <button type="button" onClick={() => setResultsUrl('')} className="btn-ghost">
-                    <CloseX className="h-4 w-4" /> Cerrar
+                    <CloseX className="h-4 w-4" /> {t('common.cerrar')}
                   </button>
                 </div>
               </motion.div>
@@ -181,7 +176,7 @@ export default function Hoteles() {
                 </AnimatePresence>
                 <iframe
                   key={resultsUrl}
-                  title="Resultados de hoteles"
+                  title={t('hoteles.resultados')}
                   src={resultsUrl}
                   onLoad={() => setIframeLoaded(true)}
                   className="block w-full bg-white"
@@ -189,7 +184,7 @@ export default function Hoteles() {
                 />
               </div>
               <p className="mt-4 text-center text-xs text-ink-500">
-                ¿Prefieres que te lo gestionemos? Escríbenos por WhatsApp y un agente reserva por ti.
+                {t('hoteles.gestionamos')}
               </p>
             </div>
           </motion.section>
@@ -198,8 +193,8 @@ export default function Hoteles() {
 
       {/* LOS MÁS DESTACADOS */}
       <section className="container-x py-20 sm:py-28">
-        <SectionHeading kicker="Los más destacados" title="Ofertas de hotel que vuelan"
-          intro="Una selección de estancias con las mejores tarifas del momento. Pulsa cualquiera para ver su disponibilidad al instante en el buscador." />
+        <SectionHeading kicker={t('hoteles.destacadosKicker')} title={t('hoteles.destacadosTitle')}
+          intro={t('hoteles.destacadosIntro')} />
         <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {FEATURED_HOTELS.map((h, i) => (
             <FeaturedCard key={h.id} h={h} i={i} onOpen={(hotel) => openResults(featuredHotelUrl(hotel), hotel.zona)} />
@@ -210,16 +205,18 @@ export default function Hoteles() {
       {/* RÉGIMEN — se filtra en el buscador */}
       <section className="border-y border-line bg-mist py-20 sm:py-24">
         <div className="container-x">
-          <SectionHeading kicker="Tú eliges" title="El régimen que mejor te encaje"
-            intro="Filtra por tipo de alojamiento y pensión directamente en el buscador: desde solo alojamiento hasta todo incluido." />
+          <SectionHeading kicker={t('hoteles.regimenKicker')} title={t('hoteles.regimenTitle')}
+            intro={t('hoteles.regimenIntro')} />
           <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {boards.map((b, i) => (
+            {boards.map((b, i) => {
+              const Icon = boardIcons[i]
+              return (
               <Reveal key={b.title} delay={i * 0.08} className="card p-7 hover:-translate-y-1 hover:shadow-lift">
-                <span className="grid h-12 w-12 place-items-center rounded-2xl bg-cyan-50 text-cyan-600"><b.icon className="h-6 w-6" /></span>
+                <span className="grid h-12 w-12 place-items-center rounded-2xl bg-cyan-50 text-cyan-600"><Icon className="h-6 w-6" /></span>
                 <h3 className="mt-5 font-display text-lg font-bold text-ink">{b.title}</h3>
                 <p className="mt-2 text-sm leading-relaxed text-ink-500">{b.text}</p>
               </Reveal>
-            ))}
+            )})}
           </div>
         </div>
       </section>
@@ -227,20 +224,22 @@ export default function Hoteles() {
       {/* POR QUÉ RESERVAR CON NOSOTROS */}
       <section className="container-x py-20 sm:py-24">
         <div className="grid gap-6 sm:grid-cols-3">
-          {perks.map((p, i) => (
+          {perks.map((p, i) => {
+            const Icon = perkIcons[i]
+            return (
             <Reveal key={p.title} delay={i * 0.08} className="flex items-start gap-4 rounded-3xl border border-line bg-white p-6 shadow-card">
-              <span className="grid h-11 w-11 shrink-0 place-items-center rounded-2xl bg-cyan-500/10 text-cyan-600"><p.icon className="h-5 w-5" /></span>
+              <span className="grid h-11 w-11 shrink-0 place-items-center rounded-2xl bg-cyan-500/10 text-cyan-600"><Icon className="h-5 w-5" /></span>
               <div>
                 <h3 className="font-display text-base font-bold text-ink">{p.title}</h3>
                 <p className="mt-1 text-sm leading-relaxed text-ink-500">{p.text}</p>
               </div>
             </Reveal>
-          ))}
+          )})}
         </div>
       </section>
 
-      <CTABand eyebrow="Vuelo + hotel" title="Ahorra reservando tu paquete completo"
-        text="Combina tu vuelo con el alojamiento y consigue un precio mejor. Te lo montamos a medida, sin compromiso." />
+      <CTABand eyebrow={t('cta.vueloHotelEyebrow')} title={t('cta.vueloHotelTitle')}
+        text={t('cta.vueloHotelText')} />
     </>
   )
 }

@@ -4,7 +4,7 @@ import { PlaneJet } from './icons/CtaIcons'
 // Immersive submit button. Hover reveals the plane (pure CSS group-hover); the
 // parent bumps `takeoffSignal` on submit, which adds `.is-flying` for ~1s and
 // the CSS keyframes fly the plane across the whole button, leaving a contrail.
-export default function FlightButton({ takeoffSignal = 0 }) {
+export default function FlightButton({ takeoffSignal = 0, label = 'Buscar vuelo' }) {
   const [flying, setFlying] = useState(false)
   const timer = useRef()
 
@@ -36,7 +36,7 @@ export default function FlightButton({ takeoffSignal = 0 }) {
       />
 
       {/* label */}
-      <span className="alk-label relative z-10 tracking-wide transition-all duration-300">Buscar vuelo</span>
+      <span className="alk-label relative z-10 tracking-wide transition-all duration-300">{label}</span>
 
       {/* aircraft (contrail + plane) */}
       <span aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-hidden rounded-full">

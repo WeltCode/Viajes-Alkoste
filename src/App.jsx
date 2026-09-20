@@ -27,21 +27,25 @@ import Footer from './components/Footer'
 import WhatsAppFab from './components/WhatsAppFab'
 import ScrollToTop from './components/ScrollToTop'
 import CookieConsent from './components/CookieConsent'
+import { LanguageProvider } from './i18n/LanguageProvider'
 
 // Layout raíz: cabecera, pie y elementos globales alrededor de la página activa
 // (<Outlet />). Las rutas se declaran como datos en src/routes.jsx para permitir
-// el prerenderizado estático (SSG) de cada página.
+// el prerenderizado estático (SSG) de cada página. Todo va dentro del proveedor
+// de idioma (ES por defecto, EN/PT en cliente).
 export default function App() {
   return (
-    <div className="flex min-h-screen flex-col">
-      <ScrollToTop />
-      <Navbar />
-      <main className="flex-1">
-        <Outlet />
-      </main>
-      <Footer />
-      <WhatsAppFab />
-      <CookieConsent />
-    </div>
+    <LanguageProvider>
+      <div className="flex min-h-screen flex-col">
+        <ScrollToTop />
+        <Navbar />
+        <main className="flex-1">
+          <Outlet />
+        </main>
+        <Footer />
+        <WhatsAppFab />
+        <CookieConsent />
+      </div>
+    </LanguageProvider>
   )
 }

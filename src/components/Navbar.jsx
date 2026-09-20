@@ -3,11 +3,16 @@ import { Link, NavLink, useLocation } from 'react-router-dom'
 import { AnimatePresence, motion } from 'framer-motion'
 import { Menu, X, Phone } from 'lucide-react'
 import WhatsAppIcon from './WhatsAppIcon'
+import LanguageSwitcher from './LanguageSwitcher'
 import { nav, contact } from '../data/site'
+import { useI18n } from '../i18n/LanguageProvider'
 import logoLight from '../assets/AlkosteLogo.png'
 import logoNormal from '../assets/AlkosteLogoNormal.png'
 
+const NAV_KEY = { '/': 'inicio', '/vuelos': 'vuelos', '/hoteles': 'hoteles', '/nosotros': 'nosotros', '/contacto': 'contacto' }
+
 export default function Navbar() {
+  const { t } = useI18n()
   const [scrolled, setScrolled] = useState(false)
   const [open, setOpen] = useState(false)
   const { pathname } = useLocation()
@@ -69,7 +74,7 @@ export default function Navbar() {
               >
                 {({ isActive }) => (
                   <>
-                    {item.label}
+                    {t(`nav.${NAV_KEY[item.to]}`)}
                     <span
                       className={`absolute inset-x-4 -bottom-0.5 h-0.5 origin-left rounded-full bg-cyan-500 transition-transform duration-300 ${
                         isActive ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'
@@ -83,13 +88,14 @@ export default function Navbar() {
         </ul>
 
         <div className="hidden items-center gap-3 lg:flex">
+          <LanguageSwitcher onHero={overHero} />
           <a href={contact.phoneHref} className={`flex items-center gap-2 text-sm font-semibold transition-colors ${overHero ? 'text-white/90 hover:text-white' : 'text-ink-700 hover:text-cyan-600'}`}>
             <Phone className={`h-4 w-4 ${overHero ? 'text-white' : 'text-cyan-500'}`} />
             {contact.phone}
           </a>
           <a href={contact.whatsappHref} target="_blank" rel="noreferrer" className="btn-primary">
             <WhatsAppIcon className="h-4 w-4" />
-            WhatsApp
+            {t('nav.whatsapp')}
           </a>
         </div>
 
@@ -127,17 +133,18 @@ export default function Navbar() {
                         }`
                       }
                     >
-                      {item.label}
+                      {t(`nav.${NAV_KEY[item.to]}`)}
                     </NavLink>
                   </li>
                 ))}
               </ul>
               <div className="mt-3 flex flex-col gap-2 border-t border-line pt-3">
+                <div className="flex justify-center pb-1"><LanguageSwitcher /></div>
                 <a href={contact.phoneHref} className="btn-ghost w-full">
                   <Phone className="h-4 w-4 text-cyan-500" /> {contact.phone}
                 </a>
                 <a href={contact.whatsappHref} target="_blank" rel="noreferrer" className="btn-primary w-full">
-                  <WhatsAppIcon className="h-4 w-4" /> Escríbenos por WhatsApp
+                  <WhatsAppIcon className="h-4 w-4" /> {t('common.escribeWhatsapp')}
                 </a>
               </div>
             </div>

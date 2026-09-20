@@ -3,10 +3,12 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { Plane, BedDouble, Car, ShieldCheck, Luggage, TrainFront, Stamp, CreditCard, Plus } from 'lucide-react'
 import { services } from '../data/site'
 import SmartImage from './SmartImage'
+import { useI18n } from '../i18n/LanguageProvider'
 
 const icons = { Plane, BedDouble, Car, ShieldCheck, Luggage, TrainFront, StampIcon: Stamp, CreditCard }
 
 export default function ServicesShowcase() {
+  const { t } = useI18n()
   const [active, setActive] = useState(services[0].id)
   const current = services.find((s) => s.id === active) ?? services[0]
 
@@ -39,7 +41,7 @@ export default function ServicesShowcase() {
                 </span>
                 <span className="min-w-0 flex-1">
                   <span className={`block font-display text-xl font-bold transition-colors sm:text-2xl ${isActive ? 'text-ink' : 'text-ink-500 group-hover:text-ink'}`}>
-                    {s.name}
+                    {t(`services.${s.id}.name`)}
                   </span>
                   <AnimatePresence initial={false}>
                     {isActive && (
@@ -50,7 +52,7 @@ export default function ServicesShowcase() {
                         transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
                         className="block overflow-hidden text-sm leading-relaxed text-ink-500"
                       >
-                        <span className="block pt-2">{s.body}</span>
+                        <span className="block pt-2">{t(`services.${s.id}.body`)}</span>
                       </motion.span>
                     )}
                   </AnimatePresence>
@@ -73,15 +75,15 @@ export default function ServicesShowcase() {
             transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
             className="absolute inset-0"
           >
-            <SmartImage src={current.image} alt={current.name} />
+            <SmartImage src={current.image} alt={t(`services.${current.id}.name`)} />
             <div className="absolute inset-0 bg-gradient-to-t from-ink/85 via-ink/25 to-transparent" />
           </motion.div>
         </AnimatePresence>
         <div className="relative flex h-full min-h-[30rem] flex-col justify-end p-8">
           <motion.div key={current.id + '-t'} initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.1 }}>
-            <span className="mb-3 inline-flex items-center gap-2 text-[0.72rem] font-bold uppercase tracking-[0.22em] text-cyan-200">{current.tagline}</span>
-            <h3 className="display text-3xl text-white">{current.name}</h3>
-            <p className="mt-3 max-w-md text-sm leading-relaxed text-white/80">{current.body}</p>
+            <span className="mb-3 inline-flex items-center gap-2 text-[0.72rem] font-bold uppercase tracking-[0.22em] text-cyan-200">{t(`services.${current.id}.tagline`)}</span>
+            <h3 className="display text-3xl text-white">{t(`services.${current.id}.name`)}</h3>
+            <p className="mt-3 max-w-md text-sm leading-relaxed text-white/80">{t(`services.${current.id}.body`)}</p>
           </motion.div>
         </div>
       </div>

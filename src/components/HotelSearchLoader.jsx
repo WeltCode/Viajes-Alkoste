@@ -1,14 +1,7 @@
 import { useEffect, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { BedDouble, MapPin, Star, Wifi, Waves, Utensils } from 'lucide-react'
-
-const MESSAGES = [
-  'Consultando disponibilidad…',
-  'Comparando tarifas en tiempo real…',
-  'Buscando las mejores habitaciones…',
-  'Revisando régimen y servicios…',
-  'Preparando tu selección…',
-]
+import { useI18n } from '../i18n/LanguageProvider'
 
 // Iconos de servicios que flotan suavemente en el fondo.
 const FLOATERS = [
@@ -50,11 +43,13 @@ function SkeletonCard({ delay = 0 }) {
 }
 
 export default function HotelSearchLoader({ destino }) {
+  const { t } = useI18n()
+  const messages = t('hotelLoader')
   const [msg, setMsg] = useState(0)
   useEffect(() => {
-    const id = setInterval(() => setMsg((m) => (m + 1) % MESSAGES.length), 1500)
+    const id = setInterval(() => setMsg((m) => (m + 1) % messages.length), 1500)
     return () => clearInterval(id)
-  }, [])
+  }, [messages.length])
 
   return (
     <div className="relative flex min-h-[560px] flex-col items-center justify-center overflow-hidden bg-gradient-to-b from-cyan-50 via-white to-white px-6 py-14">
@@ -121,7 +116,7 @@ export default function HotelSearchLoader({ destino }) {
               transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
               className="font-display text-lg font-bold text-ink"
             >
-              {MESSAGES[msg]}
+              {messages[msg]}
             </motion.p>
           </AnimatePresence>
         </div>

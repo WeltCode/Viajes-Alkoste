@@ -4,8 +4,10 @@ import { motion } from 'framer-motion'
 import { ArrowGo, ArrowBack } from './icons/CtaIcons'
 import { destinations, contact } from '../data/site'
 import SmartImage from './SmartImage'
+import { useI18n } from '../i18n/LanguageProvider'
 
 function Card({ d, index }) {
+  const { t } = useI18n()
   const msg = encodeURIComponent(`¡Hola Alkoste! Me interesa viajar a ${d.city}, ${d.country}. ¿Me dais información?`)
   return (
     <motion.a
@@ -27,7 +29,7 @@ function Card({ d, index }) {
 
       {d.tag && (
         <span className="absolute left-4 top-4 rounded-full bg-cyan-500 px-3 py-1 text-xs font-bold text-white shadow-glow">
-          {d.tag}
+          {t(`destinTags.${d.tag}`, d.tag)}
         </span>
       )}
       <span className="absolute right-4 top-4 flex items-center gap-1 rounded-full bg-white/90 px-2.5 py-1 text-xs font-bold text-ink backdrop-blur">
@@ -46,7 +48,7 @@ function Card({ d, index }) {
           <p className="text-sm text-white/80">
             desde <span className="text-lg font-extrabold text-white">{d.price}€</span>
           </p> */}
-          <span className="text-sm font-semibold text-white/85">Descúbrelo</span>
+          <span className="text-sm font-semibold text-white/85">{t('common.descubrelo')}</span>
           <span className="flex h-10 w-10 translate-y-1 items-center justify-center rounded-full bg-white/15 text-white opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:bg-cyan-500 group-hover:opacity-100">
             <ArrowGo className="h-4 w-4" />
           </span>

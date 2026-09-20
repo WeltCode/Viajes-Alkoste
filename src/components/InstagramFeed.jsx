@@ -5,6 +5,7 @@ import { ArrowUp } from './icons/CtaIcons'
 import SectionHeading from './SectionHeading'
 import SmartImage from './SmartImage'
 import { fetchInstagramPosts, instagramProfileUrl } from '../lib/instagram'
+import { useI18n } from '../i18n/LanguageProvider'
 
 function Tile({ post, index }) {
   return (
@@ -75,6 +76,7 @@ function Skeleton() {
 }
 
 export default function InstagramFeed() {
+  const { t } = useI18n()
   const [posts, setPosts] = useState(null)
 
   useEffect(() => {
@@ -100,9 +102,9 @@ export default function InstagramFeed() {
               </span>
             </span>
             <SectionHeading
-              kicker="Síguenos en Instagram"
-              title="Vive el viaje antes de viajar"
-              intro="Ofertas, destinos y momentos reales de nuestros viajeros. Lo último de @viajesalkoste, aquí mismo."
+              kicker={t('instagram.kicker')}
+              title={t('instagram.title')}
+              intro={t('instagram.intro')}
             />
           </div>
           <a href={instagramProfileUrl} target="_blank" rel="noreferrer" className="btn-white shrink-0">
@@ -118,7 +120,7 @@ export default function InstagramFeed() {
 
         <div className="mt-10 flex justify-center">
           <a href={instagramProfileUrl} target="_blank" rel="noreferrer" className="btn-primary">
-            Ver más en Instagram <ArrowUp className="h-4 w-4" />
+            {t('common.verMasInstagram')} <ArrowUp className="h-4 w-4" />
           </a>
         </div>
       </div>

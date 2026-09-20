@@ -3,6 +3,7 @@ import { ArrowUp } from './icons/CtaIcons'
 import SectionHeading from './SectionHeading'
 import SmartImage from './SmartImage'
 import { contact } from '../data/site'
+import { useI18n } from '../i18n/LanguageProvider'
 
 const IMG = 'https://images.unsplash.com'
 const img = (id, w = 1400) => `${IMG}/${id}?auto=format&fit=crop&w=${w}&q=85`
@@ -60,6 +61,8 @@ const themes = [
 ]
 
 function Tile({ t, index }) {
+  const { t: tr } = useI18n()
+  const title = tr(`inspiracion.${t.id}.title`, t.title)
   const msg = encodeURIComponent(`¡Hola Alkoste! Me inspira la idea de "${t.title}". ¿Me ayudáis a planearlo?`)
   return (
     <motion.a
@@ -74,16 +77,16 @@ function Tile({ t, index }) {
     >
       <SmartImage
         src={t.image}
-        alt={t.title}
+        alt={title}
         className="transition-transform duration-[1.1s] ease-out group-hover:scale-110"
       />
       <div className="absolute inset-0 bg-gradient-to-t from-ink/90 via-ink/25 to-transparent" />
       <div className="relative flex h-full flex-col justify-end p-6">
-        <span className="text-[0.7rem] font-bold uppercase tracking-[0.22em] text-cyan-300">{t.kicker}</span>
-        <h3 className="mt-1.5 font-display text-2xl font-bold text-white">{t.title}</h3>
-        <p className="mt-1.5 max-w-xs text-sm leading-relaxed text-white/80">{t.line}</p>
+        <span className="text-[0.7rem] font-bold uppercase tracking-[0.22em] text-cyan-300">{tr(`inspiracion.${t.id}.kicker`, t.kicker)}</span>
+        <h3 className="mt-1.5 font-display text-2xl font-bold text-white">{title}</h3>
+        <p className="mt-1.5 max-w-xs text-sm leading-relaxed text-white/80">{tr(`inspiracion.${t.id}.line`, t.line)}</p>
         <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-bold text-white">
-          <span className="border-b-2 border-cyan-400/0 transition-colors group-hover:border-cyan-400">Planéalo con nosotros</span>
+          <span className="border-b-2 border-cyan-400/0 transition-colors group-hover:border-cyan-400">{tr('common.planealo')}</span>
           <ArrowUp className="h-4 w-4 text-cyan-300 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
         </span>
       </div>

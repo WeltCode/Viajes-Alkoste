@@ -1,6 +1,9 @@
 import { useMemo, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { CalendarDays, ChevronLeft, ChevronRight } from 'lucide-react'
+import { useI18n } from '../i18n/LanguageProvider'
+
+const LOCALE = { es: 'es-ES', en: 'en-GB', pt: 'pt-BR' }
 
 // --- utilidades de fecha (sin librerías) -----------------------------------
 const pad = (n) => String(n).padStart(2, '0')
@@ -17,10 +20,6 @@ const startOfToday = () => {
 }
 const sameDay = (a, b) => a && b && a.getFullYear() === b.getFullYear() && a.getMonth() === b.getMonth() && a.getDate() === b.getDate()
 const addMonths = (d, n) => new Date(d.getFullYear(), d.getMonth() + n, 1)
-
-const WEEKDAYS = ['L', 'M', 'X', 'J', 'V', 'S', 'D']
-const fmtLong = new Intl.DateTimeFormat('es-ES', { day: 'numeric', month: 'short' })
-const fmtMonth = new Intl.DateTimeFormat('es-ES', { month: 'long', year: 'numeric' })
 
 // Celdas del mes (empezando en lunes), con huecos nulos al principio.
 function monthGrid(viewDate) {
@@ -39,7 +38,7 @@ function monthGrid(viewDate) {
 const shellCls =
   'group flex w-full flex-col gap-1 rounded-2xl border border-line bg-mist px-4 py-3 text-left transition-all duration-300 hover:border-cyan-200 hover:bg-white'
 
-function Trigger({ icon: Icon, label, value, active, onClick }) {
+function Trigger({ icon: Icon, label, value, active, onClick, fmtLong, placeholder }) {
   return (
     <button
       type="button"
@@ -50,7 +49,7 @@ function Trigger({ icon: Icon, label, value, active, onClick }) {
         <Icon className="h-3.5 w-3.5 text-cyan-500" /> {label}
       </span>
       <span className={`text-sm font-semibold ${value ? 'text-ink' : 'text-ink-400'}`}>
-        {value ? fmtLong.format(value) : 'Elegir fecha'}
+        {value ? fmtLong.format(value) : placeholder}
       </span>
     </button>
   )
@@ -72,6 +71,12 @@ export default function DateRangePicker({
   single = false,
   minDate,
 }) {
+  const { t, lang } = useI18n()
+  const locale = LOCALE[lang] || 'es-ES'
+  const fmtLong = useMemo(() => new Intl.DateTimeFormat(locale, { day: 'numeric', month: 'short' }), [locale])
+  const fmtMonth = useMemo(() => new Intl.DateTimeFormat(locale, { month: 'long', year: 'numeric' }), [locale])
+  const weekdays = t('datepicker.weekdays')
+
   const start = fromYMD(startDate)
   const end = fromYMD(endDate)
   const min = minDate ? fromYMD(minDate) : startOfToday()
@@ -119,9 +124,9 @@ export default function DateRangePicker({
 
   return (
     <div className={`relative grid gap-3 ${single ? 'grid-cols-1' : 'grid-cols-2'}`}>
-      <Trigger icon={CalendarDays} label={startLabel} value={start} active={open} onClick={() => setOpen((v) => !v)} />
+      <Trigger icon={CalendarDays} label={startLabel} value={start} active={open} onClick={() => setOpen((v) => !v)} fmtLong={fmtLong} placeholder={t('datepicker.elegir')} />
       {!single && (
-        <Trigger icon={CalendarDays} label={endLabel} value={end} active={open} onClick={() => setOpen((v) => !v)} />
+        <Trigger icon={CalendarDays} label={endLabel} value={end} active={open} onClick={() => setOpen((v) => !v)} fmtLong={fmtLong} placeholder={t('datepicker.elegir')} />
       )}
 
       <AnimatePresence>
@@ -139,7 +144,7 @@ export default function DateRangePicker({
               <div className="mb-2 flex items-center justify-between">
                 <button
                   type="button"
-                  aria-label="Mes anterior"
+                  aria-label={t('datepicker.mesAnterior')}
                   disabled={addMonths(view, 0) <= new Date(min.getFullYear(), min.getMonth(), 1)}
                   onClick={() => setView((v) => addMonths(v, -1))}
                   className="grid h-8 w-8 place-items-center rounded-full text-ink transition-colors hover:bg-cyan-50 hover:text-cyan-600 disabled:opacity-30"
@@ -149,7 +154,7 @@ export default function DateRangePicker({
                 <span className="text-sm font-bold text-ink first-letter:uppercase">{fmtMonth.format(view)}</span>
                 <button
                   type="button"
-                  aria-label="Mes siguiente"
+                  aria-label={t('datepicker.mesSiguiente')}
                   onClick={() => setView((v) => addMonths(v, 1))}
                   className="grid h-8 w-8 place-items-center rounded-full text-ink transition-colors hover:bg-cyan-50 hover:text-cyan-600"
                 >
@@ -159,8 +164,8 @@ export default function DateRangePicker({
 
               {/* días de la semana */}
               <div className="grid grid-cols-7 text-center text-[0.7rem] font-bold text-ink-400">
-                {WEEKDAYS.map((w) => (
-                  <span key={w} className="py-1">{w}</span>
+                {weekdays.map((w, i) => (
+                  <span key={i} className="py-1">{w}</span>
                 ))}
               </div>
 
@@ -198,10 +203,10 @@ export default function DateRangePicker({
 
               <div className="mt-2 flex items-center justify-between border-t border-line pt-2">
                 <button type="button" onClick={() => onChange({ start: '', end: '' })} className="text-xs font-semibold text-ink-500 hover:text-ink">
-                  Limpiar
+                  {t('datepicker.limpiar')}
                 </button>
                 <button type="button" onClick={() => setOpen(false)} className="rounded-full bg-cyan-500 px-4 py-1.5 text-xs font-bold text-white hover:bg-cyan-600">
-                  Listo
+                  {t('datepicker.listo')}
                 </button>
               </div>
             </motion.div>

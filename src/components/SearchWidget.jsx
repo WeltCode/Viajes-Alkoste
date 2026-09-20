@@ -4,6 +4,7 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { MapPin, Users, ArrowLeftRight, Plane, Minus, Plus, AlertCircle } from 'lucide-react'
 import FlightButton from './FlightButton'
 import DateRangePicker from './DateRangePicker'
+import { useI18n } from '../i18n/LanguageProvider'
 import {
   preloadAirports,
   searchAirports,
@@ -33,14 +34,14 @@ function FieldShell({ icon: Icon, label, children, className = '' }) {
 }
 
 /* Autocompletado de aeropuerto */
-function AirportField({ label, value, onChange, onSelect, suggestions, open, onFocus, onBlur }) {
+function AirportField({ label, placeholder, value, onChange, onSelect, suggestions, open, onFocus, onBlur }) {
   return (
     <motion.div variants={item} className="relative">
       <FieldShell icon={MapPin} label={label}>
         <input
           className={inputCls}
           autoComplete="off"
-          placeholder="Ciudad o aeropuerto"
+          placeholder={placeholder}
           value={value}
           onChange={(e) => onChange(e.target.value)}
           onFocus={onFocus}
@@ -103,6 +104,7 @@ function Stepper({ label, hint, value, min, max, onChange }) {
 }
 
 export default function SearchWidget({ showTitle = true }) {
+  const { t } = useI18n()
   const navigate = useNavigate()
   const [tripType, setTripType] = useState('round-trip')
   const [error, setError] = useState('')
@@ -142,10 +144,11 @@ export default function SearchWidget({ showTitle = true }) {
   }
   const resolve = (field) => selected[field] || resolveAirport(form[field])
 
+  const plural = (n, sing, plur) => `${n} ${t(n !== 1 ? plur : sing)}`
   const paxSummary = () => {
-    const parts = [`${pax.adults} adulto${pax.adults !== 1 ? 's' : ''}`]
-    if (pax.children) parts.push(`${pax.children} niño${pax.children !== 1 ? 's' : ''}`)
-    if (pax.babies) parts.push(`${pax.babies} bebé${pax.babies !== 1 ? 's' : ''}`)
+    const parts = [plural(pax.adults, 'buscarVuelos.adulto', 'buscarVuelos.adultos')]
+    if (pax.children) parts.push(plural(pax.children, 'buscarVuelos.nino', 'buscarVuelos.ninos'))
+    if (pax.babies) parts.push(plural(pax.babies, 'buscarVuelos.bebe', 'buscarVuelos.bebes'))
     return parts.join(' · ')
   }
 
@@ -153,14 +156,14 @@ export default function SearchWidget({ showTitle = true }) {
     e.preventDefault()
     const origin = resolve('origin')
     const destination = resolve('destination')
-    if (!origin) return setError('Selecciona un aeropuerto de origen de la lista.')
-    if (!destination) return setError('Selecciona un aeropuerto de destino de la lista.')
-    if (origin.id === destination.id) return setError('El origen y el destino no pueden ser iguales.')
-    if (!form.departureDate) return setError('Selecciona la fecha de salida.')
-    if (roundTrip && !form.returnDate) return setError('Selecciona la fecha de regreso.')
+    if (!origin) return setError(t('search.errOrigen'))
+    if (!destination) return setError(t('search.errDestino'))
+    if (origin.id === destination.id) return setError(t('search.errIgual'))
+    if (!form.departureDate) return setError(t('search.errSalida'))
+    if (roundTrip && !form.returnDate) return setError(t('search.errRegreso'))
     if (roundTrip && form.returnDate && form.returnDate < form.departureDate)
-      return setError('El regreso no puede ser anterior a la salida.')
-    if (pax.babies > pax.adults) return setError('No puede haber más bebés que adultos.')
+      return setError(t('search.errRegresoAntes'))
+    if (pax.babies > pax.adults) return setError(t('search.errBebes'))
 
     const payload = buildFlightBridgePayload({
       tripType,
@@ -204,14 +207,14 @@ export default function SearchWidget({ showTitle = true }) {
                 <Plane className="h-4 w-4 -rotate-45" />
               </motion.span>
             </span>
-            Buscar vuelos
+            {t('search.title')}
           </span>
         )}
 
         <div className="relative inline-flex rounded-full border border-line bg-mist p-1 text-xs font-bold">
           {[
-            ['round-trip', 'Ida y vuelta'],
-            ['one-way', 'Sólo ida'],
+            ['round-trip', t('search.tripRound')],
+            ['one-way', t('search.tripOne')],
           ].map(([id, label]) => (
             <button
               type="button"
@@ -246,7 +249,8 @@ export default function SearchWidget({ showTitle = true }) {
       <div className="relative grid grid-cols-1 gap-3 sm:grid-cols-2">
         <div className="relative z-20 sm:col-span-2 sm:grid sm:grid-cols-2 sm:gap-3">
           <AirportField
-            label="Origen"
+            label={t('search.origen')}
+            placeholder={t('search.ciudadAeropuerto')}
             value={form.origin}
             onChange={(v) => setField('origin', v)}
             onSelect={(a) => selectAirport('origin', a)}
@@ -256,7 +260,8 @@ export default function SearchWidget({ showTitle = true }) {
             onBlur={() => setTimeout(() => setFocused((f) => (f === 'origin' ? '' : f)), 150)}
           />
           <AirportField
-            label="Destino"
+            label={t('search.destino')}
+            placeholder={t('search.ciudadAeropuerto')}
             value={form.destination}
             onChange={(v) => setField('destination', v)}
             onSelect={(a) => selectAirport('destination', a)}
@@ -266,7 +271,7 @@ export default function SearchWidget({ showTitle = true }) {
             onBlur={() => setTimeout(() => setFocused((f) => (f === 'destination' ? '' : f)), 150)}
           />
           <div className="absolute left-1/2 top-1/2 z-30 hidden -translate-x-1/2 -translate-y-1/2 sm:block">
-            <motion.button type="button" onClick={swap} whileTap={{ scale: 0.85 }} aria-label="Intercambiar origen y destino"
+            <motion.button type="button" onClick={swap} whileTap={{ scale: 0.85 }} aria-label={`${t('search.origen')} / ${t('search.destino')}`}
               className="grid h-9 w-9 place-items-center rounded-full border border-line bg-white text-cyan-500 shadow-card ring-4 ring-white transition-colors hover:border-cyan-400 hover:text-cyan-600">
               <ArrowLeftRight className="h-4 w-4" />
             </motion.button>
@@ -276,8 +281,8 @@ export default function SearchWidget({ showTitle = true }) {
         <motion.div variants={item} className="sm:col-span-2">
           <DateRangePicker
             single={!roundTrip}
-            startLabel="Salida"
-            endLabel="Regreso"
+            startLabel={t('search.salida')}
+            endLabel={t('search.regreso')}
             startDate={form.departureDate}
             endDate={form.returnDate}
             onChange={({ start, end }) => { setError(''); setForm((f) => ({ ...f, departureDate: start, returnDate: end })) }}
@@ -287,7 +292,7 @@ export default function SearchWidget({ showTitle = true }) {
         {/* Viajeros (popover) */}
         <motion.div variants={item} className="relative z-10">
           <button type="button" onClick={() => setPaxOpen((v) => !v)} className="w-full text-left">
-            <FieldShell icon={Users} label="Viajeros">
+            <FieldShell icon={Users} label={t('search.viajeros')}>
               <span className="truncate text-sm font-semibold text-ink">{paxSummary()}</span>
             </FieldShell>
           </button>
@@ -302,10 +307,10 @@ export default function SearchWidget({ showTitle = true }) {
                   transition={{ duration: 0.18 }}
                   className="absolute z-50 mt-2 w-full min-w-[16rem] rounded-2xl border border-line bg-white p-4 shadow-lift"
                 >
-                  <Stepper label="Adultos" hint="Desde 12 años" value={pax.adults} min={1} max={9} onChange={(v) => setPax((p) => ({ ...p, adults: v }))} />
-                  <Stepper label="Niños" hint="2 a 11 años" value={pax.children} min={0} max={8} onChange={(v) => setPax((p) => ({ ...p, children: v }))} />
-                  <Stepper label="Bebés" hint="0 a 1 año" value={pax.babies} min={0} max={pax.adults} onChange={(v) => setPax((p) => ({ ...p, babies: v }))} />
-                  <button type="button" onClick={() => setPaxOpen(false)} className="btn-primary mt-3 w-full">Listo</button>
+                  <Stepper label={t('search.adultos')} hint={t('search.adultosHint')} value={pax.adults} min={1} max={9} onChange={(v) => setPax((p) => ({ ...p, adults: v }))} />
+                  <Stepper label={t('search.ninos')} hint={t('search.ninosHint')} value={pax.children} min={0} max={8} onChange={(v) => setPax((p) => ({ ...p, children: v }))} />
+                  <Stepper label={t('search.bebes')} hint={t('search.bebesHint')} value={pax.babies} min={0} max={pax.adults} onChange={(v) => setPax((p) => ({ ...p, babies: v }))} />
+                  <button type="button" onClick={() => setPaxOpen(false)} className="btn-primary mt-3 w-full">{t('search.listo')}</button>
                 </motion.div>
               </>
             )}
@@ -313,12 +318,12 @@ export default function SearchWidget({ showTitle = true }) {
         </motion.div>
 
         <motion.div variants={item} layout="position" className="flex">
-          <FlightButton takeoffSignal={takeoffSignal} />
+          <FlightButton takeoffSignal={takeoffSignal} label={t('search.buscarVuelo')} />
         </motion.div>
       </div>
 
       <p className="relative mt-4 text-xs leading-relaxed text-ink-500">
-        Verás los resultados aquí mismo, en nuestro motor de reservas.
+        {t('search.hint')}
       </p>
     </motion.form>
   )
