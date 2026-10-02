@@ -9,12 +9,12 @@ import DestinationRail from '../components/DestinationRail'
 import ReviewMarquee from '../components/ReviewMarquee'
 import InstagramFeed from '../components/InstagramFeed'
 import Inspiracion from '../components/Inspiracion'
-import HeroFlightPath from '../components/HeroFlightPath'
+import HeroSky from '../components/HeroSky'
 import CTABand from '../components/CTABand'
 import Reveal from '../components/Reveal'
 import Seo from '../components/Seo'
 import { useI18n } from '../i18n/LanguageProvider'
-import { heroVideo, heroVideoSm, heroImages, contact } from '../data/site'
+import { contact } from '../data/site'
 
 const guaranteeIcons = [ShieldCheck, Headphones, CalendarClock, Lock]
 
@@ -25,27 +25,13 @@ export default function Home() {
   return (
     <>
       <Seo />
-      {/* HERO — video */}
-      <section className="relative min-h-[100svh] overflow-hidden bg-ink">
-        <video
-          className="absolute inset-0 h-full w-full object-cover"
-          poster={heroImages.poster}
-          autoPlay
-          muted
-          loop
-          playsInline
-          preload="auto"
-          aria-hidden="true"
-        >
-          <source src={heroVideo} media="(min-width: 768px)" type="video/mp4" />
-          <source src={heroVideoSm} type="video/mp4" />
-        </video>
-        {/* legibility scrims */}
-        <div className="absolute inset-0 bg-gradient-to-r from-ink/80 via-ink/45 to-ink/10" />
-        <div className="absolute inset-0 bg-gradient-to-t from-ink/70 via-transparent to-ink/30" />
+      {/* HERO — cielo cian de marca (escena vectorial animada) */}
+      <section className="relative min-h-[100svh] overflow-hidden bg-cyan-500">
+        <HeroSky />
 
-        {/* discreet, elegant flight-route motif */}
-        <HeroFlightPath />
+        {/* velo de legibilidad para el texto (lado izquierdo) */}
+        <div className="absolute inset-0 bg-gradient-to-r from-ink/45 via-ink/15 to-transparent" />
+        <div className="absolute inset-x-0 top-0 h-56 bg-gradient-to-b from-ink/35 to-transparent" />
 
         <div className="container-x relative flex min-h-[100svh] items-center pt-28 pb-20">
           <div className="grid w-full items-center gap-12 lg:grid-cols-[1.1fr_0.9fr]">
