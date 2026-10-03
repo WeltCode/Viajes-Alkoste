@@ -14,7 +14,7 @@ import CTABand from '../components/CTABand'
 import Reveal from '../components/Reveal'
 import Seo from '../components/Seo'
 import { useI18n } from '../i18n/LanguageProvider'
-import { contact } from '../data/site'
+import { heroVideo, heroVideoSm, heroVideoPoster, contact } from '../data/site'
 
 const guaranteeIcons = [ShieldCheck, Headphones, CalendarClock, Lock]
 
@@ -25,13 +25,45 @@ export default function Home() {
   return (
     <>
       <Seo />
-      {/* HERO — cielo cian de marca (escena vectorial animada) */}
+      {/* HERO — vídeo luminoso de playa (turista en la orilla) con un grado
+          cian de marca. Con "reduce-motion" (o si el vídeo no carga) se muestra
+          la escena vectorial equivalente. */}
       <section className="relative min-h-[100svh] overflow-hidden bg-cyan-500">
-        <HeroSky />
+        {/* Respaldo vectorial: visible sólo cuando se reduce el movimiento */}
+        <div className="absolute inset-0 hidden motion-reduce:block">
+          <HeroSky />
+        </div>
+
+        {/* Vídeo (sólo cuando el movimiento está permitido) */}
+        <div className="absolute inset-0 motion-reduce:hidden">
+          <video
+            className="absolute inset-0 h-full w-full object-cover"
+            poster={heroVideoPoster}
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="auto"
+            aria-hidden="true"
+          >
+            <source src={heroVideo} media="(min-width: 768px)" type="video/mp4" />
+            <source src={heroVideoSm} type="video/mp4" />
+          </video>
+          {/* Grado de marca luminoso: realza brillo y lleva la escena a la gama
+              cian de Alkoste sin apagarla (soft-light + un lavado cian sutil). */}
+          <div className="absolute inset-0 bg-cyan-400/35 mix-blend-soft-light" />
+          <div className="absolute inset-0 bg-gradient-to-br from-cyan-300/15 via-transparent to-cyan-600/25" />
+          {/* Resplandor solar luminoso (arriba a la derecha) */}
+          <div
+            className="absolute -right-20 -top-24 h-[34rem] w-[34rem] rounded-full"
+            style={{ background: 'radial-gradient(circle, rgba(255,255,255,0.55) 0%, rgba(207,238,252,0.25) 38%, rgba(255,255,255,0) 68%)' }}
+          />
+        </div>
 
         {/* velo de legibilidad para el texto (lado izquierdo) */}
-        <div className="absolute inset-0 bg-gradient-to-r from-ink/45 via-ink/15 to-transparent" />
-        <div className="absolute inset-x-0 top-0 h-56 bg-gradient-to-b from-ink/35 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-r from-ink/60 via-ink/20 to-transparent" />
+        <div className="absolute inset-x-0 top-0 h-48 bg-gradient-to-b from-ink/30 to-transparent" />
+        <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-white/55 to-transparent" />
 
         <div className="container-x relative flex min-h-[100svh] items-center pt-28 pb-20">
           <div className="grid w-full items-center gap-12 lg:grid-cols-[1.1fr_0.9fr]">

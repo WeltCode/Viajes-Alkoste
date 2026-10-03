@@ -30,8 +30,9 @@ export const nav = [
   { label: 'Contacto', to: '/contacto' },
 ]
 
-export const heroVideo = '/videos/hero-avion.mp4' // 720p — desktop
-export const heroVideoSm = '/videos/hero-avion-sm.mp4' // 540p — mobile (lighter)
+export const heroVideo = '/videos/hero-playa.mp4' // 1080p — desktop (turista en la orilla)
+export const heroVideoSm = '/videos/hero-playa-sm.mp4' // 540p — móvil (más ligero)
+export const heroVideoPoster = '/videos/hero-playa-poster.jpg' // póster del vídeo
 
 export const heroImages = {
   main: img('photo-1507525428034-b723cf961d3e', 2400), // tropical coast
