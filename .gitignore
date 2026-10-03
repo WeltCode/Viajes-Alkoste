@@ -33,3 +33,6 @@ Thumbs.db
 *.njsproj
 *.sln
 *.sw?
+
+# Vídeos pesados del hero: alojados en GitHub Releases, fuera del repo
+public/videos/*.mp4

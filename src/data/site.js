@@ -30,9 +30,13 @@ export const nav = [
   { label: 'Contacto', to: '/contacto' },
 ]
 
-export const heroVideo = '/videos/hero-playa.mp4' // 1080p — desktop (turista en la orilla)
-export const heroVideoSm = '/videos/hero-playa-sm.mp4' // 540p — móvil (más ligero)
-export const heroVideoPoster = '/videos/hero-playa-poster.jpg' // póster del vídeo
+// Vídeos del hero alojados FUERA del árbol de git (GitHub Releases) para no
+// cargar el repo ni el build de Netlify. El póster (ligero) se queda local
+// para pintar al instante sin parpadeo mientras carga el vídeo.
+const MEDIA = 'https://github.com/WeltCode/Viajes-Alkoste/releases/download/media-assets'
+export const heroVideo = `${MEDIA}/hero-playa.mp4` // 1080p — escritorio (turista en la orilla)
+export const heroVideoSm = `${MEDIA}/hero-playa-sm.mp4` // 540p — móvil (más ligero)
+export const heroVideoPoster = '/videos/hero-playa-poster.jpg' // póster local del vídeo
 
 export const heroImages = {
   main: img('photo-1507525428034-b723cf961d3e', 2400), // tropical coast
