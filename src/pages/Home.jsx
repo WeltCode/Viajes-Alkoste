@@ -14,7 +14,7 @@ import CTABand from '../components/CTABand'
 import Reveal from '../components/Reveal'
 import Seo from '../components/Seo'
 import { useI18n } from '../i18n/LanguageProvider'
-import { heroVideo, heroVideoSm, heroVideoPoster, contact } from '../data/site'
+import { heroVideo, heroVideoSm, heroVideoPoster, heroVideoPosterSm, contact } from '../data/site'
 
 const guaranteeIcons = [ShieldCheck, Headphones, CalendarClock, Lock]
 
@@ -36,9 +36,18 @@ export default function Home() {
 
         {/* Vídeo (sólo cuando el movimiento está permitido) */}
         <div className="absolute inset-0 motion-reduce:hidden">
+          {/* Póster de carga por orientación (detrás del vídeo), para que el
+              primer fotograma no se vea recortado mientras carga. */}
+          <div
+            className="absolute inset-0 bg-cover bg-center md:hidden"
+            style={{ backgroundImage: `url(${heroVideoPosterSm})` }}
+          />
+          <div
+            className="absolute inset-0 hidden bg-cover bg-center md:block"
+            style={{ backgroundImage: `url(${heroVideoPoster})` }}
+          />
           <video
             className="absolute inset-0 h-full w-full object-cover"
-            poster={heroVideoPoster}
             autoPlay
             muted
             loop
@@ -46,6 +55,7 @@ export default function Home() {
             preload="auto"
             aria-hidden="true"
           >
+            {/* Escritorio: clip apaisado · Móvil: clip vertical nativo (sin recorte) */}
             <source src={heroVideo} media="(min-width: 768px)" type="video/mp4" />
             <source src={heroVideoSm} type="video/mp4" />
           </video>
